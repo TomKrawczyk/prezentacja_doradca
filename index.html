@@ -74,8 +74,9 @@
       color: #e67e22;
     }
     .chart-container {
+      position: relative;
+      height: 320px;
       margin-top: 30px;
-      height: 300px;
     }
     .payback {
       font-weight: bold;
@@ -142,6 +143,7 @@
       <p><strong>Koszt po dotacji:</strong> <span id="koszt-netto"></span> zł</p>
       <p class="payback"><strong>Okres zwrotu:</strong> <span id="zwrot-lat"></span> lat</p>
 
+      <!-- Wykres ROI -->
       <div class="chart-container">
         <canvas id="roiChart"></canvas>
       </div>
@@ -149,7 +151,7 @@
   </div>
 
   <script>
-    let chart = null;
+    let roiChart = null;
 
     function oblicz() {
       // Pobranie danych
@@ -167,7 +169,7 @@
 
       // Obliczenie wymaganej mocy
       const moc = zużycie / (nasłonecznienie * sprawność);
-      const mocZaokrąglona = Math.ceil(moc * 2) / 2; // zaokrąglenie w górę co 0.5 kWp
+      const mocZaokrąglona = Math.ceil(moc * 2 2) / 2; // zaokrąglenie w górę co 0.5 kWp
 
       // Roczny uzysk
       const rocznyUzysk = mocZaokrąglona * nasłonecznienie * sprawność;
@@ -209,46 +211,46 @@
       const wynik = document.getElementById('wynik');
       wynik.style.display = 'block';
 
-      // Generowanie wykresu ROI
-      generujWykres(kosztNetto, oszczędnościRoczne);
+      // Generuj wykres ROI
+      generujWykresROI(kosztNetto, oszczędnościRoczne);
     }
 
-    // Funkcja generująca wykres zwrotu
-    function generujWykres(kosztPoczątkowy, oszczędnościRoczne) {
+    // Funkcja generująca wykres ROI
+    function generujWykresROI(kosztPoczatkowy, oszczRoczne) {
       const ctx = document.getElementById('roiChart').getContext('2d');
       const lata = 20;
+      const labels = Array.from({length: lata + 1}, (_, i) => `Rok ${i}`);
       const daneKoszt = [];
-      const daneOszczędności = [];
+      const daneOszcz = [];
 
       for (let i = 0; i <= lata; i++) {
-        daneKoszt.push(i === 0 ? kosztPoczątkowy : 0);
-        daneOszczędności.push(oszczędnościRoczne * i);
+        daneKoszt.push(i === 0 ? kosztPoczatkowy : 0);
+        daneOszcz.push(oszczRoczne * i);
       }
 
-      const okresZwrotu = kosztPoczątkowy / oszczędnościRoczne;
-      const paybackYear = Math.ceil(okresZwrotu);
+      const paybackYear = Math.ceil(kosztPoczatkowy / oszczRoczne);
 
-      if (chart) chart.destroy();
+      if (roiChart) roiChart.destroy();
 
-      chart = new Chart(ctx, {
+      roiChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: Array.from({length: lata + 1}, (_, i) => `Rok ${i}`),
+          labels: labels,
           datasets: [
             {
               label: 'Koszt początkowy',
               data: daneKoszt,
               borderColor: '#e74c3c',
-              backgroundColor: 'rgba(231, 76, 60, 0.1)',
+              backgroundColor: 'rgba(231,76,60,0.1)',
               borderWidth: 2,
               pointRadius: 4,
               fill: false
             },
             {
               label: 'Kumulowane oszczędności',
-              data: daneOszczędności,
+              data: daneOszcz,
               borderColor: '#27ae60',
-              backgroundColor: 'rgba(39, 174, 96, 0.1)',
+              backgroundColor: 'rgba(39,174,96,0.15)',
               borderWidth: 3,
               pointRadius: 4,
               fill: true
@@ -259,55 +261,38 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            title: {
-              display: true,
-              text: 'Zwrot z inwestycji w czasie',
-              font: { size: 16 }
-            },
+            title: { display: true, text: 'Zwrot z inwestycji (ROI)', font: { size: 16 } },
             tooltip: {
               callbacks: {
-                label: function(context) {
-                  return `${context.dataset.label}: ${context.parsed.y.toLocaleString('pl-PL')} zł`;
+                label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('pl-PL')} zł`
+              }
+            },
+            annotation: paybackYear <= lata ? {
+              annotations: {
+                payback: {
+                  type: 'point',
+                  xValue: `Rok ${paybackYear}`,
+                  yValue: oszczRoczne * paybackYear,
+                  backgroundColor: '#f39c12',
+                  radius: 8,
+                  label: {
+                    content: `ZWROT: ${paybackYear} lat`,
+                    enabled: true,
+                    position: 'top',
+                    backgroundColor: 'rgba(0,0,0,0.7)',
+                    color: '#fff',
+                    font: { weight: 'bold' }
+                  }
                 }
               }
-            }
+            } : {}
           },
           scales: {
-            y: {
-              beginAtZero: true,
-              title: { display: true, text: 'Kwota (zł)' }
-            },
-            x: {
-              title: { display: true, text: 'Lata eksploatacji' }
-            }
-          },
-          interaction: {
-            mode: 'index',
-            intersect: false
+            y: { beginAtZero: true, title: { display: true, text: 'Kwota (zł)' } },
+            x: { title: { display: true, text: 'Lata eksploatacji' } }
           }
         }
       });
-
-      // Dodanie adnotacji punktu zwrotu
-      if (okresZwrotu <= lata) {
-        chart.options.plugins.annotation = {
-          annotations: {
-            point1: {
-              type: 'point',
-              xValue: `Rok ${paybackYear}`,
-              yValue: oszczędnościRoczne * paybackYear,
-              backgroundColor: '#f39c12',
-              radius: 8,
-              label: {
-                content: `ZWROT: ${paybackYear} lat`,
-                enabled: true,
-                position: 'top'
-              }
-            }
-          }
-        };
-        chart.update();
-      }
     }
 
     // Pokazywanie pola dotacji
