@@ -1386,6 +1386,7 @@
         let currentPageStack = ['main-menu'];
         let ostatniaProdukcja = 0; // For calculator
         let roiChart = null; // Chart instance
+        let globalPaybackYear = null; // Global variable to store payback year
 
         // Navigation sequences for each category
         const navigationSequences = {
@@ -1599,6 +1600,23 @@
             checkForChart();
         }
 
+        // Calculate payback period using the same logic as the chart
+        function obliczOkresZwrotu(cenaInstalacji, cenaPradu, produkcja, tryb) {
+            let suma = 0;
+            let cena = cenaPradu;
+            let rok = 0;
+
+            while (suma < cenaInstalacji && rok < 50) {
+                rok++;
+                if (tryb === 'optymistyczna') {
+                    cena *= 1.05; // 5% annual increase
+                }
+                suma += cena * produkcja;
+            }
+
+            return rok < 50 ? rok : null;
+        }
+
         // Generate ROI Chart
         function generujWykresROI() {
             const cenaInstalacji = parseFloat(document.getElementById('cenaInstalacji').value);
@@ -1630,6 +1648,9 @@
                     paybackYear = i;
                 }
             }
+
+            // Store the payback year globally
+            globalPaybackYear = paybackYear;
 
             if (roiChart) roiChart.destroy();
 
@@ -1690,32 +1711,34 @@
                 return;
             }
 
-            // Generate chart
+            // Generate chart first to calculate payback year
             generujWykresROI();
 
-            let lata = 0, oszczednosci = 0, wynikZwrotu = "";
+            // Use the same payback calculation as the chart
+            const paybackYear = obliczOkresZwrotu(cenaInstalacji, cenaPradu, ostatniaProdukcja, trybKalkulacji);
+
+            let wynikZwrotu = "";
 
             if (trybKalkulacji === "standardowa") {
-                lata = cenaInstalacji / (cenaPradu * ostatniaProdukcja);
-                oszczednosci = cenaPradu * ostatniaProdukcja;
+                const roczneOszczednosci = cenaPradu * ostatniaProdukcja;
                 wynikZwrotu = `
-                    <b>Szacowany okres zwrotu:</b> ${lata.toFixed(1)} lat<br>
-                    <b>Roczne oszczędności:</b> ${oszczednosci.toFixed(2)} zł
+                    <b>Szacowany okres zwrotu:</b> ${paybackYear ? paybackYear : 'ponad 20'} lat<br>
+                    <b>Roczne oszczędności:</b> ${roczneOszczednosci.toFixed(2)} zł
                 `;
             } else {
-                // Optymistyczna - 5% wzrost ceny prądu rocznie
-                let suma = 0, cena = cenaPradu;
-                while (suma < cenaInstalacji && lata < 50) {
-                    suma += cena * ostatniaProdukcja;
+                // For optimistic calculation, show total savings at payback point
+                let suma = 0;
+                let cena = cenaPradu;
+                for (let i = 1; i <= (paybackYear || 20); i++) {
                     cena *= 1.05;
-                    lata++;
+                    suma += cena * ostatniaProdukcja;
                 }
-                oszczednosci = suma;
                 wynikZwrotu = `
-                    <b>Szacowany okres zwrotu:</b> ${lata} lat<br>
-                    <b>Łączne oszczędności w tym czasie:</b> ${oszczednosci.toFixed(2)} zł
+                    <b>Szacowany okres zwrotu:</b> ${paybackYear ? paybackYear : 'ponad 20'} lat<br>
+                    <b>Łączne oszczędności w tym czasie:</b> ${suma.toFixed(2)} zł
                 `;
             }
+            
             document.getElementById('extra-result').innerHTML = wynikZwrotu;
         }
 
