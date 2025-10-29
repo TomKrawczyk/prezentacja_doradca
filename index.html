@@ -660,49 +660,6 @@
             font-size: 1.1em; /* Increased font size */
         }
 
-        /* Quiz Styles */
-        .quiz-box {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-        }
-
-        .quiz-question {
-            font-size: 1.7em; /* Increased from 1.5em to 1.7em */
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .quiz-answers button {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 15px; /* Increased padding */
-            background: rgba(74,222,128,0.2);
-            border: 1px solid #4ade80;
-            color: #fff;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.2em; /* Increased font size */
-            line-height: 1.5;
-        }
-
-        .quiz-answers button:hover {
-            background: #4ade80;
-            color: #000;
-        }
-
-        .quiz-score {
-            margin-top: 20px;
-            font-size: 1.4em; /* Increased from 1.2em to 1.4em */
-        }
-
-        .quiz-result {
-            font-size: 1.5em; /* Added for quiz result */
-            text-align: center;
-            line-height: 1.6;
-        }
-
         /* Stats Grid */
         .stats-grid {
             display: grid;
@@ -777,7 +734,7 @@
     </div>
 
     <div class="container">
-        <!-- Main Menu - Maks 5 tematów -->
+        <!-- Main Menu - 4 główne tematy -->
         <div id="main-menu" class="content-page active">
             <div class="header">
                 <div class="logo">⚡ Instalacje Fotowoltaiczne</div>
@@ -791,10 +748,6 @@
                     <div class="menu-title">O Firmie</div>
                     <div class="menu-description">Podstawowe dane o 4ECO i nasze realizacje</div>
                 </div>
-                <div class="menu-card" onclick="showSubmenu('historia')">
-                    <div class="menu-title">Historia OZE</div>
-                    <div class="menu-description">Od przeszłości przez teraźniejszość do przyszłości</div>
-                </div>
                 <div class="menu-card" onclick="showSubmenu('ceny')">
                     <div class="menu-title">Ceny Prądu</div>
                     <div class="menu-description">Dlaczego PGE i Tauron nas okradają?</div>
@@ -804,94 +757,11 @@
                     <div class="menu-description">Jak działa i co składa się na system?</div>
                 </div>
                 <div class="menu-card" onclick="showSubmenu('korzysci')">
-                    <div class="menu-title">Korzyści i Dodatki</div>
-                    <div class="menu-description">Zyski, technologie, dotacje, FAQ i quiz</div>
-                </div>
-                <div class="menu-card" onclick="showPage('calculator')">
-                    <div class="menu-title">Kalkulator PV</div>
-                    <div class="menu-description">Oblicz swoją instalację i oszczędności</div>
+                    <div class="menu-title">Korzyści i Kalkulatory</div>
+                    <div class="menu-description">Zyski, technologie, dotacje, FAQ i kalkulatory</div>
                 </div>
             </div>
         </div>
-
-        <!-- Calculator Page -->
-        <div id="calculator" class="content-page">
-            <div class="page-header">
-                <div class="page-title">Kalkulator Instalacji PV</div>
-                <div class="page-subtitle">Oblicz swoją instalację fotowoltaiczną i zobacz oszczędności!</div>
-            </div>
-            <div class="calculator-container">
-                <label>Roczne zużycie energii [kWh]</label>
-                <input type="number" id="zuzycie" placeholder="np. 4000">
-
-                <label>Wybór paneli [Wp]</label>
-                <select id="panel">
-                    <option value="450">450 (dla instalacji jednofazowych do 3,68 kWp)</option>
-                    <option value="480">480 (dla instalacji powyżej 3,68 kWp)</option>
-                </select>
-
-                <label>Orientacja dachu</label>
-                <select id="orientacja">
-                    <option value="0.95">Południe</option>
-                    <option value="0.9">Wschód-Zachód</option>
-                </select>
-
-                <label>Tryb magazynu energii</label>
-                <select id="trybMagazynu">
-                    <option value="export">On-grid (autokonsumpcja)</option>
-                    <option value="no-export">Off-grid</option>
-                </select>
-
-                <button onclick="oblicz()">OBLICZ INSTALACJĘ</button>
-
-                <div class="calc-result" id="wynik" style="display: none;"></div>
-
-                <div class="extra-calc" id="extra-calc">
-                    <h3 style="color: #4ade80; text-align: center; margin-bottom: 20px;">Oblicz okres zwrotu inwestycji</h3>
-                    <label>Obecna cena prądu [zł/kWh]</label>
-                    <input type="number" id="cenaPradu" placeholder="np. 0.85" step="0.01" min="0">
-
-                    <label>Cena instalacji [zł]</label>
-                    <input type="number" id="cenaInstalacji" placeholder="np. 35000" min="0">
-
-                    <label>Tryb kalkulacji zwrotu</label>
-                    <select id="trybKalkulacji">
-                        <option value="standardowa">Standardowa (stała cena prądu)</option>
-                        <option value="optymistyczna">Realistyczna (5% wzrostu ceny prądu rocznie)</option>
-                    </select>
-
-                    <button onclick="obliczZwrot()">Oblicz zwrot inwestycji</button>
-                    <div class="extra-result" id="extra-result"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Kalkulator PV -->
-        <div id="kalkulator" class="section">
-          <div class="calc-container">
-            <h2 class="calc-title">Kalkulator Autokonsumpcji</h2>
-            <p class="calc-subtitle">Wprowadź dane z falownika i licznika, aby zobaczyć, ile energii zużywasz na bieżąco</p>
-
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="produkcja">Produkcja prądu (kWh)</label>
-              <input type="number" id="produkcja" step="0.01" placeholder="np. 18.5" />
-          </div>
-          <div class="form-group">
-            <label for="eksport">Eksport do sieci (kWh)</label>
-            <input type="number" id="eksport" step="0.01" placeholder="np. 10.2" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="zuzycie">Całkowite zużycie domu (kWh) <small style="color:#888;">(opcjonalne)</small></label>
-          <input type="number" id="zuzycie_au" step="0.01" placeholder="np. 15.3" />
-        </div>
-
-        <button class="calc-btn" onclick="obliczAutokonsumpcje()">OBLICZ AUTOKONSUMPCJĘ</button>
-
-        <div id="wynik" class="result"></div>
-      </div>
 
         <!-- Submenu for O Firmie -->
         <div id="submenu-firma" class="content-page">
@@ -978,59 +848,6 @@
                     <li><strong>Służby i bezpieczeństwo:</strong> Współpraca z Ochotniczymi Strażami Pożarnymi (OSP) – szkolenia i konsultacje dotyczące bezpieczeństwa instalacji fotowoltaicznych oraz reagowania w sytuacjach awaryjnych. Przykład: cykl szkoleń dla OSP w gminie Mniów i regionie świętokrzyskim.</li>
                     <li><strong>Samorządy i instytucje lokalne:</strong> Współpraca z Urzędem Miasta Kielce oraz innymi jednostkami samorządowymi – działania doradcze w zakresie energii odnawialnej i zrównoważonego rozwoju.</li>
                 </ul>
-            </div>
-        </div>
-
-        <!-- Submenu for Historia OZE -->
-        <div id="submenu-historia" class="content-page">
-            <div class="page-header">
-                <div class="page-title">Historia OZE</div>
-                <div class="page-subtitle">Od starożytności do AI</div>
-            </div>
-            <div class="submenu">
-                <div class="submenu-card" onclick="showPage('historia-przeszlosc')">
-                    <div class="submenu-title">Przeszłość</div>
-                    <div class="submenu-description">Kluczowe odkrycia</div>
-                </div>
-                <div class="submenu-card" onclick="showPage('historia-terazniejszosc')">
-                    <div class="submenu-title">Teraźniejszość</div>
-                    <div class="submenu-description">Współczesny rozwój</div>
-                </div>
-                <div class="submenu-card" onclick="showPage('historia-przyszlosc')">
-                    <div class="submenu-title">Przyszłość</div>
-                    <div class="submenu-description">Innowacje i trendy</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Content for Historia - Przeszlosc -->
-        <div id="historia-przeszlosc" class="content-page">
-            <div class="page-header">
-                <div class="page-title">Przeszłość OZE</div>
-            </div>
-            <div class="slide-content">
-                <p>Od czasów starożytnych, gdy wiatr wypełniał żagle, rzeki wprawiały młyny w ruch, a słońce suszyło plony, człowiek szukał sposobów na wykorzystanie energii natury. Przełom nadszedł w 1839 roku, gdy francuski fizyk Edmond Becquerel opisał fotowoltaiczny efekt, a w 1954 roku inżynierowie Bell Labs skonstruowali pierwszy praktyczny krzemowy panel słoneczny. W Polsce zasługi wnieśli naukowiec Jan Czochralski który opracował w 1918 roku metodę produkcji krzemu monokrystalicznego kluczowego elementu dla ogniw krzemowych oraz prof. Janusz Zakrzewski z Politechniki Warszawskiej, który od lat 70. badał półprzewodniki i rozwijał ogniwa słoneczne. Dzięki ich pracom oraz kolejnym badaniom nad turbinami wiatrowymi i instalacjami wodnymi, odnawialne źródła energii zaczęły zyskiwać rangę realnej alternatywy dla paliw kopalnych.</p>
-                <div class="chart"><img src="assets/images/ceny_pradu_2003_2025_zrodlo.png" alt="Historia OZE Timeline" class="chart"></div>
-            </div>
-        </div>
-
-        <!-- Content for Historia - Terazniejszosc -->
-        <div id="historia-terazniejszosc" class="content-page">
-            <div class="page-header">
-                <div class="page-title">Teraźniejszość OZE</div>
-            </div>
-            <div class="slide-content">
-                <p>W XXI wieku fotowoltaika, farmy wiatrowe i biogazownie przestały być ciekawostką, wchodząc do głównego nurtu produkcji energii. Równolegle rozwijane są systemy magazynowania prądu, które stabilizują sieć, oraz inteligentne rozwiązania sieciowe umożliwiające automatyczne zarządzanie podażą i popytem. W Polsce szczególną rolę odegrały programy „Mój Prąd" i „Czyste Powietrze", dzięki którym tysiące gospodarstw domowych zamieniło się w prosumentów. Integracja z elektromobilnością i cyfrowymi platformami sterowania sprawia, że OZE stają się nieodłącznym elementem strategii energetycznej, budując niezależność, efektywność i odporność całego systemu.</p>
-            </div>
-        </div>
-
-        <!-- Content for Historia - Przyszlosc -->
-        <div id="historia-przyszlosc" class="content-page">
-            <div class="page-header">
-                <div class="page-title">Przyszłość OZE</div>
-            </div>
-            <div class="slide-content">
-                <p>Przyszłość branży OZE zyska nowy wymiar dzięki połączeniu odnawialnych źródeł energii ze sztuczną inteligencją i zaawansowanymi systemami zarządzania. Inteligentne HEMS/EMS, takie jak Sinum-Power, wykorzystują algorytmy do ciągłego monitorowania produkcji i zużycia, automatycznie sterując ładowaniem magazynów energii, pomp ciepła czy ładowaniem pojazdów elektrycznych w oparciu o dynamiczne ceny prądu i prognozy pogodowe. Jednocześnie platformy takie jak Eniga wprowadzają model bilansowania 1:1 przez 365 dni, który dzięki analizie danych i AI umożliwia precyzyjne planowanie bilansów energetycznych, maksymalizując autokonsumpcję i zwrot z inwestycji dla prosumentów. Te rozwiązania wyznaczają kierunek dla zrównoważonej, autonomicznej i odpornej sieci energetycznej.</p>
             </div>
         </div>
 
@@ -1243,17 +1060,17 @@
                 <p>Każdy dom i każda rodzina mają inne potrzeby energetyczne. Dlatego instalację dobieramy indywidualnie — tak, aby produkowała dokładnie tyle prądu, ile naprawdę potrzebujesz. Bez przepłacania, bez niedoborów. Wykorzystujemy przy tym specjalny kalkulator, który analizuje Twoje rachunki i zużycie, żeby stworzyć projekt szyty na miarę.</p>
                 
                 <div style="text-align: center;">
-                    <a href="#" class="calculator-link" onclick="showPage('kalkulator')">
+                    <a href="#" class="calculator-link" onclick="showPage('calculator')">
                         Przejdź do Kalkulatora PV
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Submenu for Korzyści i Dodatki -->
+        <!-- Submenu for Korzyści i Kalkulatory -->
         <div id="submenu-korzysci" class="content-page">
             <div class="page-header">
-                <div class="page-title">Korzyści i Dodatki</div>
+                <div class="page-title">Korzyści i Kalkulatory</div>
                 <div class="page-subtitle">Dlaczego warto</div>
             </div>
             <div class="submenu">
@@ -1273,9 +1090,13 @@
                     <div class="submenu-title">FAQ</div>
                     <div class="submenu-description">Najczęstsze pytania</div>
                 </div>
-                <div class="submenu-card" onclick="showPage('korzysci-quiz')">
-                    <div class="submenu-title">Quiz</div>
-                    <div class="submenu-description">Sprawdź wiedzę</div>
+                <div class="submenu-card" onclick="showPage('calculator')">
+                    <div class="submenu-title">Kalkulator PV</div>
+                    <div class="submenu-description">Oblicz swoją instalację</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('autokonsumpcja')">
+                    <div class="submenu-title">Kalkulator Autokonsumpcji</div>
+                    <div class="submenu-description">Sprawdź efektywność</div>
                 </div>
             </div>
         </div>
@@ -1353,15 +1174,79 @@
             </div>
         </div>
 
-        <!-- Content for Korzyści - Quiz -->
-        <div id="korzysci-quiz" class="content-page">
+        <!-- Calculator Page -->
+        <div id="calculator" class="content-page">
             <div class="page-header">
-                <div class="page-title">Quiz – Sprawdź się!</div>
-                <div class="page-subtitle">Zdobywaj punkty i ucz się!</div>
+                <div class="page-title">Kalkulator Instalacji PV</div>
+                <div class="page-subtitle">Oblicz swoją instalację fotowoltaiczną i zobacz oszczędności!</div>
             </div>
-            <div class="slide-content">
-                <div class="quiz-box" id="quiz-box"></div>
-                <div class="quiz-score" id="quiz-score"></div>
+            <div class="calculator-container">
+                <label>Roczne zużycie energii [kWh]</label>
+                <input type="number" id="zuzycie" placeholder="np. 4000">
+
+                <label>Wybór paneli [Wp]</label>
+                <select id="panel">
+                    <option value="450">450 (dla instalacji jednofazowych do 3,68 kWp)</option>
+                    <option value="480">480 (dla instalacji powyżej 3,68 kWp)</option>
+                </select>
+
+                <label>Orientacja dachu</label>
+                <select id="orientacja">
+                    <option value="0.95">Południe</option>
+                    <option value="0.9">Wschód-Zachód</option>
+                </select>
+
+                <label>Tryb magazynu energii</label>
+                <select id="trybMagazynu">
+                    <option value="export">On-grid (autokonsumpcja)</option>
+                    <option value="no-export">Off-grid</option>
+                </select>
+
+                <button onclick="oblicz()">OBLICZ INSTALACJĘ</button>
+
+                <div class="calc-result" id="wynik" style="display: none;"></div>
+
+                <div class="extra-calc" id="extra-calc">
+                    <h3 style="color: #4ade80; text-align: center; margin-bottom: 20px;">Oblicz okres zwrotu inwestycji</h3>
+                    <label>Obecna cena prądu [zł/kWh]</label>
+                    <input type="number" id="cenaPradu" placeholder="np. 0.85" step="0.01" min="0">
+
+                    <label>Cena instalacji [zł]</label>
+                    <input type="number" id="cenaInstalacji" placeholder="np. 35000" min="0">
+
+                    <label>Tryb kalkulacji zwrotu</label>
+                    <select id="trybKalkulacji">
+                        <option value="standardowa">Standardowa (stała cena prądu)</option>
+                        <option value="optymistyczna">Realistyczna (5% wzrostu ceny prądu rocznie)</option>
+                    </select>
+
+                    <button onclick="obliczZwrot()">Oblicz zwrot inwestycji</button>
+                    <div class="extra-result" id="extra-result"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Autokonsumpcja Calculator Page -->
+        <div id="autokonsumpcja" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Kalkulator Autokonsumpcji</div>
+                <div class="page-subtitle">Sprawdź, ile energii zużywasz na bieżąco z własnej instalacji</div>
+            </div>
+            <div class="calculator-container">
+                <h3>Wprowadź dane z falownika i licznika</h3>
+                
+                <label>Produkcja prądu [kWh]</label>
+                <input type="number" id="produkcja" step="0.01" placeholder="np. 18.5">
+
+                <label>Eksport do sieci [kWh]</label>
+                <input type="number" id="eksport" step="0.01" placeholder="np. 10.2">
+
+                <label>Całkowite zużycie domu [kWh] <small style="color:#86efac;">(opcjonalne)</small></label>
+                <input type="number" id="zuzycie_au" step="0.01" placeholder="np. 15.3">
+
+                <button onclick="obliczAutokonsumpcje()">OBLICZ AUTOKONSUMPCJĘ</button>
+
+                <div class="calc-result" id="wynik-auto" style="display: none;"></div>
             </div>
         </div>
     </div>
@@ -1372,11 +1257,10 @@
 
         // Navigation sequences for each category
         const navigationSequences = {
-            'historia': ['historia-przeszlosc', 'historia-terazniejszosc', 'historia-przyszlosc'],
             'ceny': ['ceny-historia', 'ceny-rachunki', 'ceny-sklad', 'ceny-oszczednosci', 'ceny-emisje'],
             'instalacja': ['instalacja-dzialanie', 'instalacja-komponenty', 'instalacja-montaz', 'instalacja-zaawansowane'],
             'firma': ['firma-info', 'firma-realizacje', 'firma-partnerstwa'],
-            'korzysci': ['korzysci-korzysci', 'korzysci-technologie', 'korzysci-dotacje', 'korzysci-faq', 'korzysci-quiz']
+            'korzysci': ['korzysci-korzysci', 'korzysci-technologie', 'korzysci-dotacje', 'korzysci-faq']
         };
 
         function showSubmenu(submenuId) {
@@ -1506,7 +1390,7 @@
             }
         });
 
-        // Calculator Functions
+        // PV Calculator Functions
         function oblicz() {
             let zuzycie = parseFloat(document.getElementById('zuzycie').value);
             let orientacja = parseFloat(document.getElementById('orientacja').value);
@@ -1601,67 +1485,120 @@
             document.getElementById('extra-result').innerHTML = wynikZwrotu;
         }
 
-       // Kalkulator
-    function obliczAutokonsumpcje() {
-      const produkcja = parseFloat(document.getElementById('produkcja').value);
-      const eksport = parseFloat(document.getElementById('eksport').value);
-      const wynik = document.getElementById('wynik');
-      wynik.className = 'result';
-      wynik.classList.remove('show');
+        // Autokonsumpcja Calculator Functions
+        function obliczAutokonsumpcje() {
+            const produkcja = parseFloat(document.getElementById('produkcja').value);
+            const eksport = parseFloat(document.getElementById('eksport').value);
+            const zuzycieCalkowite = parseFloat(document.getElementById('zuzycie_au').value);
+            const wynik = document.getElementById('wynik-auto');
 
-      setTimeout(() => {
-        if (isNaN(produkcja) || produkcja <= 0) return pokazBlad("Produkcja musi być > 0");
-        if (isNaN(eksport) || eksport < 0) return pokazBlad("Eksport nie może być ujemny");
-        if (eksport > produkcja) return pokazBlad("Eksport nie może przekraczać produkcji!");
+            if (isNaN(produkcja) || produkcja <= 0) {
+                pokazBlad("Produkcja musi być większa od 0", wynik);
+                return;
+            }
+            if (isNaN(eksport) || eksport < 0) {
+                pokazBlad("Eksport nie może być ujemny", wynik);
+                return;
+            }
+            if (eksport > produkcja) {
+                pokazBlad("Eksport nie może przekraczać produkcji!", wynik);
+                return;
+            }
 
-        const autokonsumpcja = ((produkcja - eksport) / produkcja) * 100;
-        const zuzyte = produkcja - eksport;
+            const autokonsumpcja = ((produkcja - eksport) / produkcja) * 100;
+            const zuzyte = produkcja - eksport;
 
-        let poziom, sugestia, klasa;
-        if (autokonsumpcja < 30) {
-          poziom = "NISKA AUTOKONSUMPCJA";
-          sugestia = "Zmień nawyki: pranie, zmywanie w dzień. <strong>Rozważ magazyn energii!</strong>";
-          klasa = "low";
-        } else if (autokonsumpcja < 60) {
-          poziom = "ŚREDNIA AUTOKONSUMPCJA";
-          sugestia = "Optymalizuj zużycie w godz. 10–15. Magazyn energii = duże oszczędności.";
-          klasa = "medium";
-        } else {
-          poziom = "WYSOKA AUTOKONSUMPCJA";
-          sugestia = "Świetnie! Maksymalizujesz zyski z PV. Monitoruj dalej.";
-          klasa = "high";
+            let poziom, sugestia, kolorKlasa;
+            if (autokonsumpcja < 30) {
+                poziom = "NISKA AUTOKONSUMPCJA";
+                sugestia = "Zmień nawyki: pranie, zmywanie w dzień. <strong>Rozważ magazyn energii!</strong>";
+                kolorKlasa = "background: rgba(239, 68, 68, 0.1); border-left-color: #ef4444;";
+            } else if (autokonsumpcja < 60) {
+                poziom = "ŚREDNIA AUTOKONSUMPCJA";
+                sugestia = "Optymalizuj zużycie w godz. 10–15. Magazyn energii = duże oszczędności.";
+                kolorKlasa = "background: rgba(255, 193, 7, 0.1); border-left-color: #ffc107;";
+            } else {
+                poziom = "WYSOKA AUTOKONSUMPCJA";
+                sugestia = "Świetnie! Maksymalizujesz zyski z PV. Monitoruj dalej.";
+                kolorKlasa = "background: rgba(74, 222, 128, 0.1); border-left-color: #4ade80;";
+            }
+
+            wynik.innerHTML = `
+                <div style="font-size: 2.2em; font-weight: 700; color: #4ade80; margin-bottom: 10px;">
+                    ${autokonsumpcja.toFixed(1)}%
+                </div>
+                <div style="font-weight: 600; font-size: 1.3em; margin-bottom: 15px; color: #86efac;">
+                    ${poziom}
+                </div>
+                <div style="font-size: 1.1em; line-height: 1.5; margin-bottom: 20px;">
+                    ${sugestia}
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 1em;">
+                    <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                        <div style="color: #86efac; font-weight: 600;">Zużyto z PV</div>
+                        <div style="font-size: 1.3em; font-weight: 700; color: #4ade80;">${zuzyte.toFixed(2)} kWh</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                        <div style="color: #86efac; font-weight: 600;">Eksport</div>
+                        <div style="font-size: 1.3em; font-weight: 700; color: #4ade80;">${eksport.toFixed(2)} kWh</div>
+                    </div>
+                </div>
+            `;
+
+            wynik.style.cssText = `
+                display: block;
+                margin-top: 20px;
+                padding: 25px;
+                border-radius: 15px;
+                border-left: 5px solid;
+                font-size: 1.1em;
+                line-height: 1.6;
+                text-align: center;
+                ${kolorKlasa}
+            `;
+
+            // Dodaj informację o całkowitym zużyciu jeśli podane
+            if (!isNaN(zuzycieCalkowite) && zuzycieCalkowite > 0) {
+                const importZSieci = Math.max(0, zuzycieCalkowite - zuzyte);
+                const dodatkoweInfo = `
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px;">
+                        <div style="font-size: 1.1em; font-weight: 600; margin-bottom: 10px; color: #86efac;">Dodatkowe informacje:</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.95em;">
+                            <div>Całkowite zużycie: <strong>${zuzycieCalkowite.toFixed(2)} kWh</strong></div>
+                            <div>Import z sieci: <strong>${importZSieci.toFixed(2)} kWh</strong></div>
+                        </div>
+                    </div>
+                `;
+                wynik.innerHTML += dodatkoweInfo;
+            }
         }
 
-        wynik.innerHTML = `
-          <div style="font-size:2rem; font-weight:700;">${autokonsumpcja.toFixed(1)}%</div>
-          <div style="font-weight:600;">${poziom}</div>
-          <div style="font-size:0.95rem; line-height:1.5;">${sugestia}</div>
-          <div class="stats">
-            <div>Zużyto z PV: <strong>${zuzyte.toFixed(2)} kWh</strong></div>
-            <div>Eksport: <strong>${eksport.toFixed(2)} kWh</strong></div>
-          </div>
-        `;
-        wynik.classList.add('show', klasa);
-      }, 100);
-    }
+        function pokazBlad(tekst, element) {
+            element.innerHTML = `<strong style="color:#ef4444;">Błąd: ${tekst}</strong>`;
+            element.style.cssText = `
+                display: block;
+                margin-top: 20px;
+                padding: 20px;
+                background: rgba(239, 68, 68, 0.1);
+                border-radius: 15px;
+                border-left: 5px solid #ef4444;
+                font-size: 1.1em;
+                line-height: 1.6;
+                text-align: center;
+            `;
+        }
 
-    function pokazBlad(tekst) {
-      const wynik = document.getElementById('wynik');
-      wynik.innerHTML = `<strong style="color:#ff6b6b;">Błąd: ${tekst}</strong>`;
-      wynik.className = 'result low show';
-    }
-
-    // Enter = oblicz
-    document.addEventListener('keypress', e => {
-      if (e.key === 'Enter' && document.activeElement.tagName === 'INPUT') {
-        obliczAutokonsumpcje();
-      }
-    });
-
-    // Scroll to top
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+        // Enter key support for calculators
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.activeElement.tagName === 'INPUT') {
+                const currentPage = currentPageStack[currentPageStack.length - 1];
+                if (currentPage === 'calculator') {
+                    oblicz();
+                } else if (currentPage === 'autokonsumpcja') {
+                    obliczAutokonsumpcje();
+                }
+            }
+        });
 
         // Notification
         function showNotification(msg) {
@@ -1671,89 +1608,9 @@
             setTimeout(() => { notif.style.display = 'none'; }, 2200);
         }
 
-        // Quiz
-        const quizQuestions = [
-            {
-                question: "Czym zajmuje się firma 4ECO?",
-                answers: ["Instalacje OZE", "Transport", "Budowa mostów", "Telekomunikacja"],
-                correct: 0
-            },
-            {
-                question: "Jak zmieniła się cena 1 kWh prądu od 2020 do 2025?",
-                answers: ["Spadła o 50%", "Wzrosła o 160%", "Pozostała bez zmian", "Wzrosła o 10%"],
-                correct: 1
-            },
-            {
-                question: "Do czego służy magazyn energii?",
-                answers: [
-                    "Do przechowywania nadwyżek prądu",
-                    "Do przechowywania wody",
-                    "Do produkcji gazu",
-                    "Do transportu energii"
-                ],
-                correct: 0
-            },
-            {
-                question: "Jaką dotację możesz uzyskać w programie Mój Prąd?",
-                answers: [
-                    "6 000 zł",
-                    "60 000 zł",
-                    "Brak dotacji",
-                    "2 000 zł"
-                ],
-                correct: 0
-            },
-            {
-                question: "Jaka jest typowa amortyzacja instalacji PV?",
-                answers: [
-                    "20 lat",
-                    "6-8 lat",
-                    "Rok",
-                    "Nie da się odzyskać kosztów"
-                ],
-                correct: 1
-            }
-        ];
-        let quizIndex = 0;
-        let quizScore = 0;
-
-        function renderQuiz() {
-            const box = document.getElementById('quiz-box');
-            if (box) {
-                if (quizIndex < quizQuestions.length) {
-                    const q = quizQuestions[quizIndex];
-                    box.innerHTML = `<div class="quiz-question">${q.question}</div><div class="quiz-answers"></div>`;
-                    const answersDiv = box.querySelector('.quiz-answers');
-                    q.answers.forEach((ans, idx) => {
-                        const btn = document.createElement('button');
-                        btn.innerText = ans;
-                        btn.onclick = () => quizAnswer(idx);
-                        answersDiv.appendChild(btn);
-                    });
-                    const scoreEl = document.getElementById('quiz-score');
-                    if (scoreEl) scoreEl.innerText = `Twój wynik: ${quizScore}/${quizQuestions.length}`;
-                } else {
-                    box.innerHTML = `<div class='quiz-result'>Koniec quizu!<br>Twój wynik: <span style='color:#22c55e;'>${quizScore} / ${quizQuestions.length}</span></div>`;
-                    const scoreEl = document.getElementById('quiz-score');
-                    if (scoreEl) scoreEl.innerText = "";
-                }
-            }
-        }
-        function quizAnswer(idx) {
-            if (quizQuestions[quizIndex].correct === idx) {
-                quizScore++;
-                showNotification("Dobra odpowiedź!");
-            } else {
-                showNotification("Ups! To nieprawidłowa odpowiedź.");
-            }
-            quizIndex++;
-            setTimeout(renderQuiz, 800);
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.back-button').classList.remove('active');
             document.querySelector('.next-button').classList.remove('active');
-            renderQuiz();
         });
     </script>
 </body>
