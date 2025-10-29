@@ -1,400 +1,1607 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Doradca PV | Tom Krawczyk</title>
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --bg-dark: #1a1a1a;
-      --card-bg: #2d2d2d;
-      --text: #e0e0e0;
-      --accent: #00ff88;
-      --accent-hover: #00cc66;
-      --border: #444;
-      --shadow: rgba(0, 255, 136, 0.2);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalacja Fotowoltaiczna - 4ECO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #334155 0%, #64748b 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
-    body {
-      background: var(--bg-dark);
-      color: var(--text);
-      font-family: 'Montserrat', sans-serif;
-      line-height: 1.7;
-      padding: 0;
-    }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-    /* Nawigacja */
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(26, 26, 26, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 15px 0;
-      z-index: 1000;
-      border-bottom: 1px solid var(--border);
-    }
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
 
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-    }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+            z-index: -1;
+        }
 
-    .nav-link {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 8px;
-      transition: all 0.3s;
-    }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
 
-    .nav-link:hover, .nav-link.active {
-      background: var(--accent);
-      color: #000;
-    }
+        .logo {
+            font-size: 3em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 40px rgba(74, 222, 128, 0.3);
+        }
 
-    /* Sekcje */
-    .section {
-      padding: 100px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+        .subtitle {
+            font-size: 1.8em;
+            color: #86efac;
+            margin-bottom: 30px;
+        }
 
-    .hero {
-      text-align: center;
-      padding-top: 140px;
-      padding-bottom: 80px;
-    }
+        .quote-box {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.2) 0%, rgba(34, 197, 94, 0.2) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #4ade80;
+            margin: 30px auto;
+            font-style: italic;
+            font-size: 1.3em;
+            text-align: center;
+            position: relative;
+            max-width: 800px;
+        }
 
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-shadow: 0 0 20px var(--shadow);
-      margin-bottom: 16px;
-    }
+        .quote-box::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 4em;
+            color: rgba(74, 222, 128, 0.3);
+            font-family: Georgia, serif;
+        }
 
-    .hero p {
-      font-size: 1.3rem;
-      color: #aaa;
-      max-width: 800px;
-      margin: 0 auto;
-    }
+        /* Main Menu */
+        .main-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
 
-    .card {
-      background: var(--card-bg);
-      padding: 30px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      margin: 20px 0;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    }
+        .menu-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(74, 222, 128, 0.3);
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .card h2 {
-      color: var(--accent);
-      margin-bottom: 16px;
-      font-size: 1.8rem;
-    }
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
 
-    .btn-primary {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-      color: #000;
-      padding: 14px 28px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 700;
-      margin-top: 20px;
-      box-shadow: 0 4px 15px var(--shadow);
-      transition: all 0.2s;
-    }
+        .menu-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #4ade80;
+            box-shadow: 0 20px 40px rgba(74, 222, 128, 0.3);
+        }
 
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px var(--shadow);
-    }
+        .menu-card:hover::before {
+            opacity: 1;
+        }
 
-    /* Kalkulator */
-    #kalkulator {
-      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-      padding: 80px 20px;
-    }
+        .menu-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #4ade80;
+            margin-bottom: 15px;
+        }
 
-    .calc-container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: var(--card-bg);
-      padding: 40px;
-      border-radius: 20px;
-      border: 2px solid var(--accent);
-      box-shadow: 0 0 30px var(--shadow);
-    }
+        .menu-description {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
 
-    .calc-title {
-      text-align: center;
-      color: var(--accent);
-      font-size: 2.2rem;
-      margin-bottom: 12px;
-      text-shadow: 0 0 15px var(--shadow);
-    }
+        /* Content Pages */
+        .content-page {
+            display: none;
+            min-height: 100vh;
+            padding: 40px 0;
+        }
 
-    .calc-subtitle {
-      text-align: center;
-      color: #aaa;
-      margin-bottom: 30px;
-    }
+        .content-page.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    @media (max-width: 600px) {
-      .form-grid { grid-template-columns: 1fr; }
-    }
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
 
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--accent);
-      font-weight: 600;
-    }
+        .page-title {
+            font-size: 3em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
 
-    .form-group input {
-      width: 100%;
-      padding: 14px;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      background: #3a3a3a;
-      color: white;
-      font-size: 1rem;
-    }
+        .page-subtitle {
+            font-size: 1.4em;
+            color: #86efac;
+            margin-bottom: 30px;
+        }
 
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.3);
-    }
+        /* Submenu */
+        .submenu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
 
-    .calc-btn {
-      width: 100%;
-      padding: 16px;
-      font-size: 1.2rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-      color: #000;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      margin-top: 10px;
-      box-shadow: 0 4px 15px var(--shadow);
-      transition: all 0.2s;
-    }
+        .submenu-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(74, 222, 128, 0.3);
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
 
-    .calc-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px var(--shadow);
-    }
+        .submenu-card:hover {
+            transform: translateY(-10px);
+            border-color: #4ade80;
+            box-shadow: 0 20px 40px rgba(74, 222, 128, 0.3);
+        }
 
-    .result {
-      margin-top: 30px;
-      padding: 24px;
-      border-radius: 16px;
-      text-align: center;
-      font-size: 1.1rem;
-      min-height: 120px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 12px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s ease;
-    }
+        .submenu-title {
+            font-size: 1.6em;
+            color: #86efac;
+            margin-bottom: 10px;
+        }
 
-    .result.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+        .submenu-description {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.8);
+        }
 
-    .low { background: rgba(255, 77, 77, 0.15); border: 1px solid #ff4444; color: #ff8888; }
-    .medium { background: rgba(255, 193, 7, 0.15); border: 1px solid #ffc107; color: #ffd54f; }
-    .high { background: rgba(0, 255, 136, 0.15); border: 1px solid var(--accent); color: var(--accent); }
+        /* Slide Content - INCREASED FONT SIZES */
+        .slide-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-    .stats {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 16px;
-      font-size: 0.95rem;
-      color: #ccc;
-    }
+        .slide-content p {
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3em; /* Increased from 1em to 1.3em */
+        }
 
-    /* Stopka */
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #666;
-      font-size: 0.9rem;
-    }
+        .slide-content h3 {
+            font-size: 1.8em; /* Increased from 1.5em to 1.8em */
+            color: #4ade80;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
 
-    .scroll-indicator {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--accent);
-      color: #000;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      box-shadow: 0 4px 15px var(--shadow);
-      cursor: pointer;
-      opacity: 0.8;
-      transition: all 0.3s;
-      z-index: 999;
-    }
+        .slide-content ul {
+            list-style: none;
+            padding: 0;
+        }
 
-    .scroll-indicator:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-  </style>
+        .slide-content li {
+            margin-bottom: 18px; /* Increased from 12px to 18px */
+            font-size: 1.25em; /* Increased from 1.1em to 1.25em */
+            position: relative;
+            padding-left: 30px; /* Increased from 25px to 30px */
+            line-height: 1.7; /* Added line-height for better readability */
+        }
+
+        .slide-content li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+            font-size: 1.1em;
+        }
+
+        .realizations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .realization-img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .realization-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(74, 222, 128, 0.3);
+        }
+
+        .interactive-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .interactive-item {
+            flex: 1 1 200px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 1.2em; /* Increased font size */
+        }
+
+        .interactive-item:hover {
+            background: rgba(74,222,128,0.2);
+        }
+
+        .anger-section {
+            color: #ef4444;
+            font-weight: bold;
+            margin: 20px 0;
+            font-size: 1.3em; /* Increased font size */
+            line-height: 1.7; /* Added line-height */
+        }
+
+        .chart {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        /* Calculator Link Button */
+        .calculator-link {
+            display: inline-block;
+            margin: 30px 0;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(74, 222, 128, 0.3);
+            text-align: center;
+        }
+
+        .calculator-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(74, 222, 128, 0.4);
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+
+        .calculator-link:active {
+            transform: translateY(-1px);
+        }
+
+        /* Navigation */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            padding: 15px 30px;
+            background: rgba(74, 222, 128, 0.2);
+            border: 2px solid #4ade80;
+            border-radius: 50px;
+            color: #4ade80;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            display: none;
+            font-size: 1.1em; /* Increased font size */
+        }
+
+        .back-button:hover {
+            background: #4ade80;
+            color: #0a0e27;
+            transform: translateX(-5px);
+        }
+
+        .back-button.active {
+            display: block;
+        }
+
+        /* Next Button */
+        .next-button {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 15px 30px;
+            background: rgba(74, 222, 128, 0.2);
+            border: 2px solid #4ade80;
+            border-radius: 50px;
+            color: #4ade80;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            display: none;
+            font-size: 1.1em;
+        }
+
+        .next-button:hover {
+            background: #4ade80;
+            color: #0a0e27;
+            transform: translateX(5px);
+        }
+
+        .next-button.active {
+            display: block;
+        }
+
+        /* Calculator Styles */
+        .calculator-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid rgba(74, 222, 128, 0.3);
+            box-shadow: 0 20px 40px rgba(74, 222, 128, 0.2);
+        }
+
+        .calculator-container h3 {
+            text-align: center;
+            color: #4ade80;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .calculator-container label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #86efac;
+            font-size: 1.1em;
+        }
+
+        .calculator-container input, 
+        .calculator-container select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 2px solid rgba(74, 222, 128, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #1f2937;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .calculator-container input::placeholder {
+            color: rgba(31, 41, 55, 0.6);
+        }
+
+        /* Enhanced Select Styling */
+        .calculator-container select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234ade80' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+
+        .calculator-container select:focus {
+            outline: none;
+            border-color: #4ade80;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+        }
+
+        .calculator-container select option {
+            background: #ffffff;
+            color: #1f2937;
+            padding: 10px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .calculator-container select option:hover,
+        .calculator-container select option:checked {
+            background: #f0f9ff;
+            color: #1f2937;
+        }
+
+        .calculator-container button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .calculator-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(74, 222, 128, 0.3);
+        }
+
+        .calc-result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(74, 222, 128, 0.1);
+            border-radius: 15px;
+            border-left: 5px solid #4ade80;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .extra-calc {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            display: none;
+        }
+
+        .extra-result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 15px;
+            border-left: 5px solid #ffc107;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-menu, .submenu {
+                grid-template-columns: 1fr;
+            }
+            .logo { font-size: 2em; }
+            .page-title { font-size: 2em; }
+            .slide-content p { font-size: 1.2em; } /* Responsive font size */
+            .slide-content li { font-size: 1.15em; } /* Responsive font size */
+            .calculator-container {
+                padding: 15px;
+                margin: 10px;
+            }
+            .back-button, .next-button {
+                top: 20px;
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+            .back-button {
+                left: 20px;
+            }
+            .next-button {
+                right: 20px;
+            }
+        }
+
+        /* Modal Styles - Enhanced for Gallery */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #334155 0%, #64748b 100%);
+            margin: auto;
+            padding: 30px;
+            border: 2px solid #4ade80;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            color: #fff;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(74, 222, 128, 0.3);
+            margin: 20px 0;
+        }
+
+        .modal-content p {
+            font-size: 1.3em;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .modal-content h2 {
+            color: #4ade80;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        /* Gallery Modal Specific Styles */
+        .gallery-modal .modal-content {
+            background: linear-gradient(135deg, #334155 0%, #64748b 100%);
+            border: 2px solid #4ade80;
+            color: #fff;
+        }
+
+        .gallery-modal .modal-content img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(74, 222, 128, 0.3);
+        }
+
+        .gallery-modal .modal-content h2 {
+            color: #4ade80;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .gallery-modal .modal-content p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3em;
+            margin-top: 15px;
+        }
+
+        .close {
+            color: #4ade80;
+            float: right;
+            font-size: 35px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #22c55e;
+            text-decoration: none;
+            transform: scale(1.1);
+        }
+
+        /* Notification */
+        .notification {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #22c55e;
+            color: #fff;
+            padding: 15px 25px; /* Increased padding */
+            border-radius: 8px;
+            font-size: 1.1em; /* Increased font size */
+        }
+
+        /* Quiz Styles */
+        .quiz-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .quiz-question {
+            font-size: 1.7em; /* Increased from 1.5em to 1.7em */
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .quiz-answers button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 15px; /* Increased padding */
+            background: rgba(74,222,128,0.2);
+            border: 1px solid #4ade80;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em; /* Increased font size */
+            line-height: 1.5;
+        }
+
+        .quiz-answers button:hover {
+            background: #4ade80;
+            color: #000;
+        }
+
+        .quiz-score {
+            margin-top: 20px;
+            font-size: 1.4em; /* Increased from 1.2em to 1.4em */
+        }
+
+        .quiz-result {
+            font-size: 1.5em; /* Added for quiz result */
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.2em; /* Increased from 2em to 2.2em */
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 1.1em; /* Increased from 1em to 1.1em */
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* FAQ Box */
+        .faq-box {
+            background: rgba(255,255,255,0.05);
+            padding: 25px; /* Increased padding */
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .faq-question {
+            color: #4ade80;
+            font-weight: bold;
+            margin-bottom: 15px; /* Increased margin */
+            font-size: 1.3em; /* Increased font size */
+        }
+
+        .faq-answer {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2em; /* Increased font size */
+            line-height: 1.7; /* Added line-height */
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Nawigacja -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="#home" class="nav-link active">Start</a>
-      <a href="#o-mnie" class="nav-link">O mnie</a>
-      <a href="#uslugi" class="nav-link">Usługi</a>
-      <a href="#kalkulator" class="nav-link">Kalkulator PV</a>
-      <a href="#kontakt" class="nav-link">Kontakt</a>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section id="home" class="section hero">
-    <h1>Tom Krawczyk</h1>
-    <p>Profesjonalny Doradca Fotowoltaiki | Pomogę Ci zarabiać na słońcu</p>
-    <a href="#kalkulator" class="btn-primary">Sprawdź swoje oszczędności</a>
-  </section>
-
-  <!-- O mnie -->
-  <section id="o-mnie" class="section">
-    <div class="card">
-      <h2>O mnie</h2>
-      <p>Od 5 lat pomagam rodzinom i firmom w całej Polsce obniżać rachunki za prąd. Specjalizuję się w doborze optymalnych instalacji PV z magazynem energii.</p>
-    </div>
-  </section>
-
-  <!-- Usługi -->
-  <section id="uslugi" class="section">
-    <div class="card">
-      <h2>Moje usługi</h2>
-      <ul style="margin: 16px 0; padding-left: 20px;">
-        <li>Audyt energetyczny</li>
-        <li>Dobór instalacji PV</li>
-        <li>Magazyny energii</li>
-        <li>Optymalizacja autokonsumpcji</li>
-        <li>Finansowanie i dotacje</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Kalkulator PV -->
-  <section id="kalkulator" class="section">
-    <div class="calc-container">
-      <h2 class="calc-title">Kalkulator Autokonsumpcji</h2>
-      <p class="calc-subtitle">Wprowadź dane z falownika i licznika, aby zobaczyć, ile energii zużywasz na bieżąco</p>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="produkcja">Produkcja prądu (kWh)</label>
-          <input type="number" id="produkcja" step="0.01" placeholder="np. 18.5" />
+    <!-- Back Button -->
+    <a href="#" class="back-button" onclick="goBack()">← Wstecz</a>
+    
+    <!-- Next Button -->
+    <a href="#" class="next-button" onclick="goNext()">Dalej →</a>
+    
+    <div class="notification" id="notification"></div>
+    
+    <!-- Regular Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-content" id="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
         </div>
-        <div class="form-group">
-          <label for="eksport">Eksport do sieci (kWh)</label>
-          <input type="number" id="eksport" step="0.01" placeholder="np. 10.2" />
+    </div>
+
+    <!-- Gallery Modal -->
+    <div class="modal gallery-modal" id="galleryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeGalleryModal()">&times;</span>
+            <div id="gallery-modal-body"></div>
         </div>
+    </div>
+
+    <div class="container">
+        <!-- Main Menu - Maks 5 tematów -->
+        <div id="main-menu" class="content-page active">
+            <div class="header">
+                <div class="logo">⚡ Instalacje Fotowoltaiczne</div>
+                <div class="subtitle">Twoja droga do energetycznej niezależności</div>
+                <div class="quote-box">
+                    Dzień pierwszy - Instalacje fotowoltaiczne
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-card" onclick="showSubmenu('firma')">
+                    <div class="menu-title">O Firmie</div>
+                    <div class="menu-description">Podstawowe dane o 4ECO i nasze realizacje</div>
+                </div>
+                <div class="menu-card" onclick="showSubmenu('historia')">
+                    <div class="menu-title">Historia OZE</div>
+                    <div class="menu-description">Od przeszłości przez teraźniejszość do przyszłości</div>
+                </div>
+                <div class="menu-card" onclick="showSubmenu('ceny')">
+                    <div class="menu-title">Ceny Prądu</div>
+                    <div class="menu-description">Dlaczego PGE i Tauron nas okradają?</div>
+                </div>
+                <div class="menu-card" onclick="showSubmenu('instalacja')">
+                    <div class="menu-title">Instalacja PV</div>
+                    <div class="menu-description">Jak działa i co składa się na system?</div>
+                </div>
+                <div class="menu-card" onclick="showSubmenu('korzysci')">
+                    <div class="menu-title">Korzyści i Dodatki</div>
+                    <div class="menu-description">Zyski, technologie, dotacje, FAQ i quiz</div>
+                </div>
+                <div class="menu-card" onclick="showPage('calculator')">
+                    <div class="menu-title">Kalkulator PV</div>
+                    <div class="menu-description">Oblicz swoją instalację i oszczędności</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Page -->
+        <div id="calculator" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Kalkulator Instalacji PV</div>
+                <div class="page-subtitle">Oblicz swoją instalację fotowoltaiczną i zobacz oszczędności!</div>
+            </div>
+            <div class="calculator-container">
+                <label>Roczne zużycie energii [kWh]</label>
+                <input type="number" id="zuzycie" placeholder="np. 4000">
+
+                <label>Wybór paneli [Wp]</label>
+                <select id="panel">
+                    <option value="450">450 (dla instalacji jednofazowych do 3,68 kWp)</option>
+                    <option value="480">480 (dla instalacji powyżej 3,68 kWp)</option>
+                </select>
+
+                <label>Orientacja dachu</label>
+                <select id="orientacja">
+                    <option value="0.95">Południe</option>
+                    <option value="0.9">Wschód-Zachód</option>
+                </select>
+
+                <label>Tryb magazynu energii</label>
+                <select id="trybMagazynu">
+                    <option value="export">On-grid (autokonsumpcja)</option>
+                    <option value="no-export">Off-grid</option>
+                </select>
+
+                <button onclick="oblicz()">OBLICZ INSTALACJĘ</button>
+
+                <div class="calc-result" id="wynik" style="display: none;"></div>
+
+                <div class="extra-calc" id="extra-calc">
+                    <h3 style="color: #4ade80; text-align: center; margin-bottom: 20px;">Oblicz okres zwrotu inwestycji</h3>
+                    <label>Obecna cena prądu [zł/kWh]</label>
+                    <input type="number" id="cenaPradu" placeholder="np. 0.85" step="0.01" min="0">
+
+                    <label>Cena instalacji [zł]</label>
+                    <input type="number" id="cenaInstalacji" placeholder="np. 35000" min="0">
+
+                    <label>Tryb kalkulacji zwrotu</label>
+                    <select id="trybKalkulacji">
+                        <option value="standardowa">Standardowa (stała cena prądu)</option>
+                        <option value="optymistyczna">Realistyczna (5% wzrostu ceny prądu rocznie)</option>
+                    </select>
+
+                    <button onclick="obliczZwrot()">Oblicz zwrot inwestycji</button>
+                    <div class="extra-result" id="extra-result"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kalkulator PV -->
+        <div id="kalkulator" class="section">
+          <div class="calc-container">
+            <h2 class="calc-title">Kalkulator Autokonsumpcji</h2>
+            <p class="calc-subtitle">Wprowadź dane z falownika i licznika, aby zobaczyć, ile energii zużywasz na bieżąco</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="produkcja">Produkcja prądu (kWh)</label>
+              <input type="number" id="produkcja" step="0.01" placeholder="np. 18.5" />
+          </div>
+          <div class="form-group">
+            <label for="eksport">Eksport do sieci (kWh)</label>
+            <input type="number" id="eksport" step="0.01" placeholder="np. 10.2" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="zuzycie">Całkowite zużycie domu (kWh) <small style="color:#888;">(opcjonalne)</small></label>
+          <input type="number" id="zuzycie_au" step="0.01" placeholder="np. 15.3" />
+        </div>
+
+        <button class="calc-btn" onclick="obliczAutokonsumpcje()">OBLICZ AUTOKONSUMPCJĘ</button>
+
+        <div id="wynik" class="result"></div>
       </div>
 
-      <div class="form-group">
-        <label for="zuzycie">Całkowite zużycie domu (kWh) <small style="color:#888;">(opcjonalne)</small></label>
-        <input type="number" id="zuzycie" step="0.01" placeholder="np. 15.3" />
-      </div>
+        <!-- Submenu for O Firmie -->
+        <div id="submenu-firma" class="content-page">
+            <div class="page-header">
+                <div class="page-title">O Firmie</div>
+                <div class="page-subtitle">4ECO - Lider OZE w Polsce</div>
+            </div>
+            <div class="submenu">
+                <div class="submenu-card" onclick="showPage('firma-info')">
+                    <div class="submenu-title">Informacje o 4ECO</div>
+                    <div class="submenu-description">Statystyki i wsparcie</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('firma-realizacje')">
+                    <div class="submenu-title">Nasze Realizacje</div>
+                    <div class="submenu-description">Przykłady instalacji</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('firma-partnerstwa')">
+                    <div class="submenu-title">Współprace</div>
+                    <div class="submenu-description">Partnerzy i instytucje</div>
+                </div>
+            </div>
+        </div>
 
-      <button class="calc-btn" onclick="obliczAutokonsumpcje()">OBLICZ AUTOKONSUMPCJĘ</button>
+        <!-- Content for O Firmie - Info -->
+        <div id="firma-info" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Informacje o 4ECO</div>
+            </div>
+            <div class="slide-content">
+                <p>4ECO to lider polskiego rynku odnawialnych źródeł energii, któremu zaufało już ponad 40 tys. klientów w całym kraju. Dzięki 49 oddziałom jesteśmy obecni w każdym rejonie kraju, zapewniając dostępność usług oraz pełne wsparcie na miejscu. Nasza oferta opiera się na wysokiej jakości, którą gwarantuje praca 80 certyfikowanych ekip montażowych oraz 460 doradców specjalizujących się w temacie ogrzewania i fotowoltaice.</p>
+                <p>Bezpieczeństwo gwarantuje ubezpieczenie instalacji na 3 mln zł w TUiR Warta S.A. Oferujemy pełne wsparcie — od projektu i montażu po formalności związane z dotacjami — zapewniając klientom komfort i dopasowanie rozwiązań do ich potrzeb.</p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">40 tys.</span>
+                        <span class="stat-label">klientów</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">49</span>
+                        <span class="stat-label">oddziałów</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">80</span>
+                        <span class="stat-label">ekip montażowych</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">460</span>
+                        <span class="stat-label">doradców</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">3 mln zł</span>
+                        <span class="stat-label">ubezpieczenia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      <div id="wynik" class="result"></div>
+        <!-- Content for O Firmie - Realizacje -->
+        <div id="firma-realizacje" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Nasze Realizacje</div>
+            </div>
+            <div class="slide-content">
+                <p>Współpracujemy z tysiącami klientów, realizując instalacje w domach, firmach i na gruntach. Oto przykłady naszych projektów.</p>
+                <div class="realizations-grid">
+                    <img src="https://een.ec.europa.eu/apiws/documents/sites/apiws.documents/files/2024-02/dji_fly_20230126_105346_764_1674727001791_photo_optimized_0.jpg" alt="Realizacja 1" class="realization-img" onclick="openGallery(this, 'Instalacja fotowoltaiczna na dachu domu jednorodzinnego', 'Nowoczesna instalacja PV o mocy 10 kWp z panelami monokrystalicznymi.')">
+                    <img src="https://een.ec.europa.eu/apiws/documents/sites/apiws.documents/files/2024-02/RemoteMediaFile_6554001_0_2022_05_04_16_57_24_0.JPG" alt="Realizacja 2" class="realization-img" onclick="openGallery(this, 'Farma fotowoltaiczna na gruncie', 'Duża instalacja gruntowa o mocy 500 kWp dla przedsiębiorstwa.')">
+                    <img src="https://media.datacenterdynamics.com/media/images/Orange_Poland_Lodz.original.jpg" alt="Realizacja 3" class="realization-img" onclick="openGallery(this, 'Instalacja przemysłowa Orange Polska', 'Kompleksowy system PV dla centrum danych w Łodzi.')">
+                    <img src="https://een.ec.europa.eu/apiws/documents/sites/apiws.documents/files/2024-02/dji_fly_20230525_163450_853_1685025424828_photo_optimized_0.jpg" alt="Realizacja 4" class="realization-img" onclick="openGallery(this, 'Instalacja na dachu przemysłowym', 'System fotowoltaiczny na hali magazynowej o mocy 250 kWp.')">
+                    <img src="https://media.springernature.com/lw1200/springer-static/image/art%3A10.1007%2Fs10098-022-02403-0/MediaObjects/10098_2022_2403_Fig6_HTML.jpg" alt="Realizacja 5" class="realization-img" onclick="openGallery(this, 'Agrowoltaika - innowacyjne rozwiązanie', 'Połączenie produkcji energii z uprawą roślin.')">
+                    <img src="https://www.pv-magazine.com/wp-content/uploads/2021/11/Mibets-Floating-PV-in-Poland-01.jpg" alt="Realizacja 6" class="realization-img" onclick="openGallery(this, 'Pływająca elektrownia fotowoltaiczna', 'Pierwsza w Polsce instalacja floating PV na zbiorniku wodnym.')">
+                </div>
+            </div>
+        </div>
+
+        <!-- Content for O Firmie - Partnerstwa -->
+        <div id="firma-partnerstwa" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Współprace</div>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li><strong>Uczelnie i nauka:</strong> Partnerstwo z Politechniką Świętokrzyską – wspólne inicjatywy badawczo-rozwojowe w zakresie odnawialnych źródeł energii (OZE). Celem współpracy jest rozwój innowacyjnych technologii oraz wymiana wiedzy między nauką a biznesem.</li>
+                    <li><strong>Fundacje i edukacja ekologiczna:</strong> ECO Fundacja – organizacja powiązana z 4ECO, prowadząca działania edukacyjne, warsztaty i akcje promujące świadome korzystanie z energii oraz odnawialne źródła energii.</li>
+                    <li><strong>Służby i bezpieczeństwo:</strong> Współpraca z Ochotniczymi Strażami Pożarnymi (OSP) – szkolenia i konsultacje dotyczące bezpieczeństwa instalacji fotowoltaicznych oraz reagowania w sytuacjach awaryjnych. Przykład: cykl szkoleń dla OSP w gminie Mniów i regionie świętokrzyskim.</li>
+                    <li><strong>Samorządy i instytucje lokalne:</strong> Współpraca z Urzędem Miasta Kielce oraz innymi jednostkami samorządowymi – działania doradcze w zakresie energii odnawialnej i zrównoważonego rozwoju.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Submenu for Historia OZE -->
+        <div id="submenu-historia" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Historia OZE</div>
+                <div class="page-subtitle">Od starożytności do AI</div>
+            </div>
+            <div class="submenu">
+                <div class="submenu-card" onclick="showPage('historia-przeszlosc')">
+                    <div class="submenu-title">Przeszłość</div>
+                    <div class="submenu-description">Kluczowe odkrycia</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('historia-terazniejszosc')">
+                    <div class="submenu-title">Teraźniejszość</div>
+                    <div class="submenu-description">Współczesny rozwój</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('historia-przyszlosc')">
+                    <div class="submenu-title">Przyszłość</div>
+                    <div class="submenu-description">Innowacje i trendy</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content for Historia - Przeszlosc -->
+        <div id="historia-przeszlosc" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Przeszłość OZE</div>
+            </div>
+            <div class="slide-content">
+                <p>Od czasów starożytnych, gdy wiatr wypełniał żagle, rzeki wprawiały młyny w ruch, a słońce suszyło plony, człowiek szukał sposobów na wykorzystanie energii natury. Przełom nadszedł w 1839 roku, gdy francuski fizyk Edmond Becquerel opisał fotowoltaiczny efekt, a w 1954 roku inżynierowie Bell Labs skonstruowali pierwszy praktyczny krzemowy panel słoneczny. W Polsce zasługi wnieśli naukowiec Jan Czochralski który opracował w 1918 roku metodę produkcji krzemu monokrystalicznego kluczowego elementu dla ogniw krzemowych oraz prof. Janusz Zakrzewski z Politechniki Warszawskiej, który od lat 70. badał półprzewodniki i rozwijał ogniwa słoneczne. Dzięki ich pracom oraz kolejnym badaniom nad turbinami wiatrowymi i instalacjami wodnymi, odnawialne źródła energii zaczęły zyskiwać rangę realnej alternatywy dla paliw kopalnych.</p>
+                <div class="chart"><img src="assets/images/ceny_pradu_2003_2025_zrodlo.png" alt="Historia OZE Timeline" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Content for Historia - Terazniejszosc -->
+        <div id="historia-terazniejszosc" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Teraźniejszość OZE</div>
+            </div>
+            <div class="slide-content">
+                <p>W XXI wieku fotowoltaika, farmy wiatrowe i biogazownie przestały być ciekawostką, wchodząc do głównego nurtu produkcji energii. Równolegle rozwijane są systemy magazynowania prądu, które stabilizują sieć, oraz inteligentne rozwiązania sieciowe umożliwiające automatyczne zarządzanie podażą i popytem. W Polsce szczególną rolę odegrały programy „Mój Prąd" i „Czyste Powietrze", dzięki którym tysiące gospodarstw domowych zamieniło się w prosumentów. Integracja z elektromobilnością i cyfrowymi platformami sterowania sprawia, że OZE stają się nieodłącznym elementem strategii energetycznej, budując niezależność, efektywność i odporność całego systemu.</p>
+            </div>
+        </div>
+
+        <!-- Content for Historia - Przyszlosc -->
+        <div id="historia-przyszlosc" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Przyszłość OZE</div>
+            </div>
+            <div class="slide-content">
+                <p>Przyszłość branży OZE zyska nowy wymiar dzięki połączeniu odnawialnych źródeł energii ze sztuczną inteligencją i zaawansowanymi systemami zarządzania. Inteligentne HEMS/EMS, takie jak Sinum-Power, wykorzystują algorytmy do ciągłego monitorowania produkcji i zużycia, automatycznie sterując ładowaniem magazynów energii, pomp ciepła czy ładowaniem pojazdów elektrycznych w oparciu o dynamiczne ceny prądu i prognozy pogodowe. Jednocześnie platformy takie jak Eniga wprowadzają model bilansowania 1:1 przez 365 dni, który dzięki analizie danych i AI umożliwia precyzyjne planowanie bilansów energetycznych, maksymalizując autokonsumpcję i zwrot z inwestycji dla prosumentów. Te rozwiązania wyznaczają kierunek dla zrównoważonej, autonomicznej i odpornej sieci energetycznej.</p>
+            </div>
+        </div>
+
+        <!-- Submenu for Ceny Prądu -->
+        <div id="submenu-ceny" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Ceny Prądu</div>
+                <div class="page-subtitle">Tragiczna historia podwyżek</div>
+            </div>
+            <div class="submenu">
+                <div class="submenu-card" onclick="showPage('ceny-historia')">
+                    <div class="submenu-title">Historia Podwyżek</div>
+                    <div class="submenu-description">Wzrost cen od 2020</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('ceny-rachunki')">
+                    <div class="submenu-title">Rachunki Puchną</div>
+                    <div class="submenu-description">Jak to wygląda w domu</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('ceny-sklad')">
+                    <div class="submenu-title">Skład Rachunku</div>
+                    <div class="submenu-description">Opłaty i podatki</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('ceny-oszczednosci')">
+                    <div class="submenu-title">Oszczędności Karane</div>
+                    <div class="submenu-description">Inwestycje w sprzęt</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('ceny-emisje')">
+                    <div class="submenu-title">Kary Emisyjne</div>
+                    <div class="submenu-description">Podatek w przebraniu</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content for Ceny - Historia -->
+        <div id="ceny-historia" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Historia Podwyżek</div>
+            </div>
+            <div class="slide-content">
+                <p class="anger-section">W 2020 roku 1 kWh kosztowała około 0,55 zł. W 2025 roku - już 1,34 zł. To nie jest normalna korekta cen – to wzrost o ponad 160% za dokładnie tę samą energię. I nie dlatego, że prąd jest lepszy. Nie dlatego, że zużywasz więcej. Powód jest prosty: Tauron, PGE i inni dostawcy prądu mogą podnosić ceny, bo system im na to pozwala.</p>
+                 <div class="chart"><img src="assets/images/ceny_pradu_2003_2025_zrodlo.png" alt="Historia OZE Timeline" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Content for Ceny - Rachunki -->
+        <div id="ceny-rachunki" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Rachunki Puchną</div>
+            </div>
+            <div class="slide-content">
+                <p class="anger-section">Roczne rachunki przy tym samym zużyciu (ok. 3650 kWh): 2020: 1 800 zł, 2023: 2 700 zł, 2025: ponad 4 200 zł. Nie zmieniłeś nic. Nie kupiłeś nowych urządzeń. Nie zużywasz więcej energii. A mimo to płacisz coraz więcej. Dlaczego? Bo w tej układance Ty jesteś tylko płatnikiem. Nie klientem. Nie partnerem. Tylko źródłem pieniędzy, które można bez końca doić.</p>
+                <p>Czas ucieka, rachunki puchną. Jak naprawdę wyglądają podwyżki w Twoim domu?</p>
+                <div class="chart"><img src="assets/images/kalendarz-rachunek.png" alt="Rachunki puchną" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Content for Ceny - Skład -->
+        <div id="ceny-sklad" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Skład Rachunku</div>
+            </div>
+            <div class="slide-content">
+                <p class="anger-section">Twój rachunek za prąd to nie tylko energia. To cała lista dopłat, podatków i „opłat specjalnych", które sprawiają, że płacisz coraz więcej – nawet jeśli nic nie zmieniasz w swoim domu.</p>
+                <ul>
+                    <li>Energię czynną – to, co faktycznie zużywasz.</li>
+                    <li>Dystrybucję i składki sieciowe – czyli opłatę za sam fakt, że prąd w ogóle do Ciebie dociera.</li>
+                    <li>Abonament, opłatę przejściową, jakościową – dopłaty, których nazw nie rozumiesz, ale musisz je płacić.</li>
+                    <li>Opłaty dodatkowe – OZE, kogeneracyjna i od lipca 2025 r. z powrotem opłata mocowa.</li>
+                    <li>Podatki – VAT i akcyza, bo nawet państwo musi „zarobić" na Twoim rachunku.</li>
+                </ul>
+                <p>Efekt? Rachunek, który wygląda jak kara za to, że w ogóle masz prąd w domu. A to nie koniec. Dochodzą jeszcze „ochronne" regulacje: zamrożenia cen, limity zużycia, „cena maksymalna" (tylko do września 2025). Brzmi jak ochrona? W praktyce to tylko iluzja – i tak płacisz coraz więcej.</p>
+                 <div class="chart"><img src="assets/images/struktura_rachunku_2025_realistyczna.png" alt="Struktura rachunku" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Content for Ceny - Oszczednosci -->
+        <div id="ceny-oszczednosci" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Oszczędności Karane</div>
+            </div>
+            <div class="slide-content">
+                <p class="anger-section">Oszczędzałeś? A i tak płacisz więcej. Przez lata wymieniałeś stary sprzęt na energooszczędny, wierząc, że to obniży rachunki. Zainwestowałeś krocie w nowoczesne urządzenia: Lodówka A+++ – 2 500 zł, Pralka A+++ – 2 000 zł, Zmywarka A+++ – 2 200 zł, Żarówki LED – 500 zł, Piekarnik A+ – 1 800 zł, Telewizor LED – 2 500 zł, Mikrofalówka A – 800 zł, Zamrażarka A++ – 2 000 zł. Łącznie: ponad 12 500 zł wydane tylko po to, żeby oszczędzać.</p>
+                <p>A efekt? Nie mniejsze rachunki. Większe niż kiedykolwiek. Im mniej prądu zużywasz – tym bardziej jesteś karany. To nie jest rynek. To nie jest uczciwość. To jest systemowe okradanie ludzi, którzy chcieli zrobić coś dobrze.</p>
+                <div class="chart"><img src="assets/images/rachunek-struktura.png" alt="Oszczędzałeś?" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Content for Ceny - Emisje -->
+        <div id="ceny-emisje" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Kary Emisyjne</div>
+            </div>
+            <div class="slide-content">
+                <p class="anger-section">Kary emisyjne to nic innego jak podatek za oddychanie przemysłu. Oficjalnie: walka z globalnym ociepleniem. W praktyce? Bezwzględny mechanizm drenowania kieszeni zwykłych ludzi.</p>
+                <p>Zasada jest prosta: przekraczasz limit emisji CO₂ → płać. nie masz wyjścia → płać. ceny emisji idą w górę → płać jeszcze więcej. A przecież to nie korporacje czy politycy płacą najwięcej. To Ty płacisz drożej za prąd, paliwo, transport, zakupy. Bo oni sprytnie przerzucili wszystko na Ciebie.</p>
+                <p>W Polsce to wygląda jeszcze gorzej: 60% energii z węgla. To oznacza jedno – ceny będą rosły rok w rok. Nie dlatego, że muszą. Dlatego, że tak jest im wygodnie. Efekt? System, który miał ratować planetę, stał się kolejnym podatkiem w przebraniu ekologii.</p>
+                <div class="chart"><img src="assets/images/Prognozowa.jpg" alt="Kary emisyjne" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Submenu for Instalacja PV -->
+        <div id="submenu-instalacja" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Instalacja PV</div>
+                <div class="page-subtitle">Jak działa system</div>
+            </div>
+            <div class="submenu">
+                <div class="submenu-card" onclick="showPage('instalacja-dzialanie')">
+                    <div class="submenu-title">Jak Działa</div>
+                    <div class="submenu-description">Podstawy działania PV</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('instalacja-komponenty')">
+                    <div class="submenu-title">Komponenty</div>
+                    <div class="submenu-description">Elementy instalacji</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('instalacja-montaz')">
+                    <div class="submenu-title">Montaż</div>
+                    <div class="submenu-description">Sposoby i ograniczenia</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('instalacja-zaawansowane')">
+                    <div class="submenu-title">Zaawansowane</div>
+                    <div class="submenu-description">Magazyny i AI</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content for Instalacja - Dzialanie -->
+        <div id="instalacja-dzialanie" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Jak Działa Instalacja</div>
+            </div>
+            <div class="slide-content">
+                <p>Wolność zaczyna się tutaj. Przez lata płaciłeś coraz więcej. Podatki, opłaty, limity, regulacje – system dusił Cię jak kajdany, z roku na rok mocniej. Ale wreszcie jest wyjście. Własna instalacja to zerwany łańcuch. To moment, w którym rachunek przestaje być wyrokiem, a staje się formalnością. Każdy kilowat, który produkujesz u siebie, to cegła wyjęta z muru, który Cię otaczał. I nagle czujesz – oddychasz pełną piersią. Nie zgadujesz już, ile zabiorą Ci w przyszłym roku. Bo to Ty masz swój prąd. To Ty decydujesz. Fotowoltaika to nie moda. To Alcatraz z którego naprawdę da się uciec. A im szybciej uciekniesz, tym szybciej odzyskasz wolność, pieniądze i spokój.</p>
+                <p>Instalacja fotowoltaiczna działa poprzez przekształcanie promieniowania słonecznego w energię elektryczną. Moduły fotowoltaiczne produkują prąd stały, który inwerter zamienia na prąd zmienny. Nadwyżki energii są oddawane do sieci lub magazynowane.</p>
+                <div class="chart"><img src="assets/images/dzialanieinstalacji.png" alt="Działanie instalacji" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Content for Instalacja - Komponenty -->
+        <div id="instalacja-komponenty" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Komponenty</div>
+            </div>
+            <div class="slide-content">
+                <h3>Moduły fotowoltaiczne/ Panele</h3>
+                <p>Zbudowane ze szkła, krzemu i aluminium. Produkcja energii za dnia — gdy jest jasno. Odporne na warunki atmosferyczne (UV, wilgoć, grad itp.). Wymiary: ok. 2094 × 1038 mm, Grubość: ok. 30 mm, Waga: ok. 26,5 kg. Monokrystaliczne, Full black, Half-cut, Polski serwis i gwarancja, Bifacjalne.</p>
+                <h3>Inwerter (falownik)</h3>
+                <p>Zamienia prąd z paneli (prąd stały) na domowy (prąd zmienny - gniazdka). Bezobsługowy, działa sam. Aplikacja mobilna – pełna kontrola zdalnie. Gotowy do rozbudowy. Polski serwis + 10 lat gwarancji.</p>
+                <h3>Zabezpieczenia AC/DC</h3>
+                <p>Podwójna skrzynka – osobne zabezpieczenia dla domu i instalacji. Uziemienie w standardzie – każda Nasza instalacja chroniona od podstaw. Sprzęt najwyższej klasy – certyfikowane zabezpieczenia Dehn, z atestem Straży Pożarnej. Gwarancja bezpieczeństwa dla Twojego domu, domowników i sprzętów.</p>
+                <h3>Licznik dwukierunkowy</h3>
+                <p>Zgłoszenie wysyłamy po montażu do Twojego operatora (Tauron, PGE, ENEA, Energa). Wszystkie formalności leżą po naszej stronie. Operator ma maks. 30 dni na wymianę licznika dwukierunkowego. Wymiana odbywa się bez kosztów dla klienta. Wyjątek: licznik przedpłatowy trzeba wymienić przed montażem.</p>
+                <h3>Sieć energetyczna</h3>
+                <p>Gwarantuje ciągłość dostaw energii niezależnie od warunków atmosferycznych. Odbiera nadwyżki z instalacji PV i przekazuje je do systemu. Umożliwia pełną wymianę energii dzięki licznikowi dwukierunkowemu. Stabilizuje parametry napięcia i częstotliwości w instalacji. Zapewnia kompatybilność i zgodność pracy systemu PV z krajową infrastrukturą energetyczną.</p>
+                <div class="interactive-section">
+                    <div class="interactive-item" onclick="showComponentModal('Moduły Fotowoltaiczne', 'assets/images/panel.png', 'Monokrystaliczne panele fotowoltaiczne o mocy 450-480 Wp.')">Moduł/Panel fotowotaiczny</div>
+                    <div class="interactive-item" onclick="showComponentModal('Inwerter (Falownik)', 'assets/images/falownik.png', 'Zaawansowany inwerter  z aplikacją mobilną. Zamienia prąd stały DC na zmienny AC. Monitoring produkcji w czasie rzeczywistym, 10 lat gwarancji.')">Inwerter(falownik)</div>
+                    <div class="interactive-item" onclick="showComponentModal('Zabezpieczenia AC/DC', 'assets/images/zabezpieczenie.png', 'Skrzynka zabezpieczeń z uziemieniem. Certyfikowane zabezpieczenia Dehn z atestem Straży Pożarnej. Pełne bezpieczeństwo instalacji.')">Zabezpieczenia AC/DC</div>
+                    <div class="interactive-item" onclick="showComponentModal('Licznik Dwukierunkowy', 'assets/images/licznik.png', 'Nowoczesny licznik dwukierunkowy rejestrujący produkcję i zużycie energii. Wymiana bezpłatna przez operatora sieci w ciągu 30 dni.')">Licznik dwukierunkowy</div>
+                    <div class="interactive-item" onclick="showComponentModal('Sieć Energetyczna', 'assets/images/siec.png', 'Krajowa sieć elektroenergetyczna zapewniająca ciągłość dostaw. Odbiera nadwyżki energii i stabilizuje parametry napięcia.')">Sieć energetyczna</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content for Instalacja - Montaz -->
+        <div id="instalacja-montaz" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Montaż</div>
+            </div>
+            <div class="slide-content">
+                <p>Sposoby montażu: Na dachach, gruntach, wiatach. Gdzie nie montujemy paneli? Na powierzchniach zacienionych przez drzewa, kominy, anteny lub inne przeszkody. Stałe zacienienie znacząco obniża wydajność instalacji. Dobieramy lokalizację tak, by zapewnić maksymalny dostęp do promieniowania słonecznego przez cały dzień.</p>
+                <div class="realizations-grid">
+                    <img src="assets/images/ekierka.png" alt="zły stan" class="realization-img" onclick="openGallery(this, 'Ekierka', 'System montażowy na dachu płaskim')">
+                    <img src="assets/images/blacha.png" alt="zły stan" class="realization-img" onclick="openGallery(this, 'Blachodachówka','System montażowy na blachodachówce')">
+                    <img src="assets/images/gont.png" alt="zły stan" class="realization-img" onclick="openGallery(this, 'Gont bitumiczny','System montażowy na goncie bitumicznym')">
+                    <img src="assets/images/grunt.png" alt="zły stan" class="realization-img" onclick="openGallery(this, 'Instalacja na gruncie','Konstukcja gruntowa')"> 
+                </div>
+                <ul>
+                    <li>Na dachach w złym stanie technicznym: Nie montujemy na pokryciach wymagających wymiany, przeciekających lub niestabilnych. Instalacja PV to inwestycja na lata — musi opierać się na solidnej konstrukcji.</li>
+                    <div class="chart"><img src="assets/images/zly stan.png" alt="zły stan" class="chart"></div>
+                    <li>Na dachach pokrytych eternitem (azbestem): Zgodnie z obowiązującymi przepisami nie wolno montować paneli na azbeście. Wymagana jest wcześniejsza wymiana pokrycia na bezpieczne i zgodne z normami.</li>
+                    <div class="chart"><img src="assets/images/eternit.png" alt="Eternit" class="chart"></div>
+                    <li>Na dachach o ekstremalnym kącie nachylenia (powyżej 60°): Zbyt stromy dach utrudnia bezpieczny montaż i serwisowanie instalacji. W takich przypadkach proponujemy alternatywne lokalizacje lub konstrukcje wsporcze.</li>
+                    <li>Na obiektach bez zgody właściciela lub wspólnoty mieszkaniowej: W przypadku budynków wielorodzinnych lub współwłasności wymagamy pisemnej zgody wszystkich stron. Brak zgody uniemożliwia legalny montaż.</li>
+                    <li>Na obiektach tymczasowych, niestabilnych lub bez przyłącza energetycznego: Instalacja PV wymaga trwałej konstrukcji oraz możliwości podłączenia do sieci lub systemu magazynowania energii. Nie montujemy na barakach, kontenerach czy obiektach sezonowych.</li>
+                    <div class="chart"><img src="assets/images/zacienienie.png" alt="Zacienienionych" class="chart"></div>                                                                                                                                                                                                                                                                   
+                    <li>Na dachach, które nie spełniają warunków montażowych pod względem powierzchni lub orientacji: Jeśli dach jest zbyt mały, skierowany na północ lub ma nietypową geometrię, proponujemy alternatywne rozwiązania — np. montaż na gruncie, wiacie lub elewacji.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Content for Instalacja - Zaawansowane -->
+        <div id="instalacja-zaawansowane" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Zaawansowane Funkcje</div>
+            </div>
+            <div class="slide-content">
+                <h3>Autokonsumpcja – czyli prąd bez pośredników</h3>
+                <p>Wyobraź sobie, że Twoje panele działają jak mini-elektrownia na dachu. Gdy produkują energię, w pierwszej kolejności trafia ona prosto do Twoich urządzeń: lodówki, pralki, klimatyzacji czy komputera. Nie przechodzi przez żadne biurokratyczne „rurki", nie idzie najpierw do operatora – korzystasz z niej od razu. I tu jest cała magia. Każdy kilowat zużyty na miejscu to czysta oszczędność – bez opłat za przesył, bez czekania na rozliczenie. Twój dach staje się źródłem darmowej energii, a sieć działa tylko jako wsparcie, gdy naprawdę jej potrzebujesz.</p>
+                <div class="chart"><img src="assets/images/autokonsumpcja.jpg" alt="Autokonsumpcja" class="chart"></div>
+                <h3>Jak zatrzymać więcej własnej energii?</h3>
+                <p>Najprostszy sposób to korzystać z prądu wtedy, kiedy słońce daje go najwięcej. Zmywarka o 13:00 zamiast o 22:00, pralka w południe, piekarnik i pompa ciepła w godzinach największej produkcji — to wszystko sprawia, że więcej energii zostaje u Ciebie w domu, zamiast płynąć do sieci. Można pójść krok dalej i wykorzystać inteligentne gniazdka czy programatory, które same uruchomią urządzenia w najlepszym momencie. A jeśli naprawdę chcesz mieć pełną kontrolę i przestać „oddawać" energię za darmo — rozwiązaniem jest magazyn energii. To on zbiera nadwyżki i oddaje je wieczorem, w nocy czy przy awarii. Dzięki temu Twoja instalacja działa nie tylko wtedy, gdy świeci słońce, ale wtedy, gdy Ty faktycznie potrzebujesz prądu. To nie jest już tylko oszczędność. To niezależność i poczucie, że Twoja energia zostaje tam, gdzie powinna — w Twoim domu.</p>
+                <h3>Magazyn energii – zatrzymaj własny prąd zamiast go oddawać</h3>
+                <p>Magazyn energii to urządzenie, które sprawia, że prąd wyprodukowany przez Twoją instalację naprawdę zostaje u Ciebie. Gdy panele pracują pełną mocą i produkują więcej niż potrzebujesz, nadwyżka nie wędruje do sieci – tylko ładuje magazyn. A później, kiedy słońce znika albo zapotrzebowanie rośnie, energia wraca dokładnie tam, gdzie jest potrzebna. Wieczorem, w nocy, w czasie szczytu, a nawet przy awarii sieci – masz własne źródło zasilania. To technologia, która zwiększa autokonsumpcję, poprawia bilans finansowy i daje niezależność, o której większość użytkowników sieci może tylko pomarzyć.</p>
+                <div class="chart"><img src="assets/images/magazyn.png" alt="Magazyn energii" class="chart"></div>
+                <h3>Inteligentne systemy zarządzania energią – Sinum Power i ENIGA</h3>
+                <p>Tradycyjna fotowoltaika daje Ci prąd. Ale inteligentne systemy zarządzania energią sprawiają, że ten prąd zaczyna pracować dla Ciebie jak nigdy wcześniej. Sinum Power to rozwiązanie, które działa jak mózg całej instalacji. Analizuje w czasie rzeczywistym produkcję z paneli, Twoje zużycie w domu oraz stan magazynu energii. Dzięki algorytmom sterowanym przez sztuczną inteligencję podejmuje decyzje, kiedy zasilać dom, kiedy ładować baterię, a kiedy korzystać z energii zgromadzonej wcześniej. Efekt: Maksymalna autokonsumpcja, Minimalne rachunki. To już nie tylko fotowoltaika. To połączenie sztucznej inteligencji, automatyzacji i Twojej instalacji w jeden system, który daje Ci przewagę, niezależność i spokój.</p>
+                <p>ENIGA idzie jeszcze krok dalej. To system, który uczy się Twoich nawyków i reaguje na warunki rynkowe. W praktyce oznacza to, że nie tylko zarządza przepływem energii, ale też przewiduje, kiedy będzie najbardziej opłacalne jej wykorzystanie. Automatycznie rozładowuje magazyn wtedy, gdy ceny w sieci są najwyższe, a ładuje go wtedy, gdy energia jest tania lub produkowana przez Twoją instalację. Dzięki ENIGA: Nie oddajesz prądu do sieci za bezcen. Masz realną kontrolę nad kosztami. Twoja energia pracuje wtedy, gdy to najbardziej się opłaca.</p>
+                <h3>Dobór instalacji</h3>
+                <p>Każdy dom i każda rodzina mają inne potrzeby energetyczne. Dlatego instalację dobieramy indywidualnie — tak, aby produkowała dokładnie tyle prądu, ile naprawdę potrzebujesz. Bez przepłacania, bez niedoborów. Wykorzystujemy przy tym specjalny kalkulator, który analizuje Twoje rachunki i zużycie, żeby stworzyć projekt szyty na miarę.</p>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="calculator-link" onclick="showPage('kalkulator')">
+                        Przejdź do Kalkulatora PV
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submenu for Korzyści i Dodatki -->
+        <div id="submenu-korzysci" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Korzyści i Dodatki</div>
+                <div class="page-subtitle">Dlaczego warto</div>
+            </div>
+            <div class="submenu">
+                <div class="submenu-card" onclick="showPage('korzysci-korzysci')">
+                    <div class="submenu-title">Korzyści</div>
+                    <div class="submenu-description">Zyski z PV</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('korzysci-technologie')">
+                    <div class="submenu-title">Technologie</div>
+                    <div class="submenu-description">Zaawansowane systemy</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('korzysci-dotacje')">
+                    <div class="submenu-title">Dotacje</div>
+                    <div class="submenu-description">Wsparcie finansowe</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('korzysci-faq')">
+                    <div class="submenu-title">FAQ</div>
+                    <div class="submenu-description">Najczęstsze pytania</div>
+                </div>
+                <div class="submenu-card" onclick="showPage('korzysci-quiz')">
+                    <div class="submenu-title">Quiz</div>
+                    <div class="submenu-description">Sprawdź wiedzę</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content for Korzyści - Korzyści -->
+        <div id="korzysci-korzysci" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Korzyści z PV</div>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>Realne oszczędności od pierwszego dnia: Każdy kilowat wyprodukowany u siebie to mniej pieniędzy oddanych do sieci i mniejszy rachunek już w pierwszym miesiącu.</li>
+                    <li>Pełna niezależność energetyczna: Nieważne, co zrobią politycy, jak wzrosną ceny prądu — masz własne źródło energii i kontrolę nad zużyciem.</li>
+                    <li>Inteligentne zarządzanie energią (AI): System sam optymalizuje zużycie, ładowanie i magazynowanie prądu. Ty tylko korzystasz z efektów — niższych rachunków.</li>
+                    <li>Bezpieczeństwo i trwałość instalacji: Atestowane zabezpieczenia, solidny montaż i komponenty renomowanych marek gwarantują spokój na lata.</li>
+                    <li>Wzrost wartości nieruchomości: Dom z własną instalacją PV i magazynem energii to dziś nie tylko oszczędność — to inwestycja, która zwiększa jego wartość rynkową.</li>
+                </ul>
+                <p>Chcesz to wszystko mieć? Niższe rachunki, własną energię, niezależność od systemu i technologię, która pracuje dla Ciebie 24/7? To nie wizja przyszłości. To rozwiązanie, które możesz mieć u siebie już teraz. Im szybciej zaczniesz, tym szybciej przestaniesz płacić za cudzy zysk i zaczniesz budować własną wolność energetyczną. NIC NIE ROBIĆ = bycie zakładnikiem. PREMIUM = wolność i niezależność.</p>
+            </div>
+        </div>
+
+        <!-- Content for Korzyści - Technologie -->
+        <div id="korzysci-technologie" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Technologie</div>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>Nowoczesne panele monokrystaliczne</li>
+                    <li>Falowniki z monitoringiem produkcji</li>
+                    <li>Magazyny energii (akumulatory LiFePO₄)</li>
+                    <li>Systemy do monitoringu online (aplikacja mobilna)</li>
+                    <li>Instalacje hybrydowe (PV + pompy ciepła)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Content for Korzyści - Dotacje -->
+        <div id="korzysci-dotacje" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Dotacje i Wsparcie</div>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>Program "Mój Prąd" – do 6 000 zł dotacji</li>
+                    <li>Ulga termomodernizacyjna – nawet 53 000 zł odpisu od podatku</li>
+                    <li>Regionalne programy wsparcia</li>
+                    <li>Pomoc w formalnościach od 4ECO</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Content for Korzyści - FAQ -->
+        <div id="korzysci-faq" class="content-page">
+            <div class="page-header">
+                <div class="page-title">FAQ</div>
+            </div>
+            <div class="slide-content">
+                <div class="faq-box">
+                    <div class="faq-question">Jak długo trwa montaż instalacji?</div>
+                    <div class="faq-answer">Zazwyczaj od 1 do 3 dni roboczych, w zależności od wielkości systemu.</div>
+                </div>
+                <div class="faq-box">
+                    <div class="faq-question">Czy mogę magazynować energię?</div>
+                    <div class="faq-answer">Tak, oferujemy magazyny energii, które pozwalają przechowywać nadwyżki.</div>
+                </div>
+                <div class="faq-box">
+                    <div class="faq-question">Co z serwisem i gwarancją?</div>
+                    <div class="faq-answer">Zapewniamy pełny serwis gwarancyjny i pogwarancyjny na podzespoły i montaż.</div>
+                </div>
+                <div class="faq-box">
+                    <div class="faq-question">Jakie są koszty instalacji?</div>
+                    <div class="faq-answer">Koszt zależy od mocy instalacji – typowo od 15 do 35 tys. zł, minus dotacje.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content for Korzyści - Quiz -->
+        <div id="korzysci-quiz" class="content-page">
+            <div class="page-header">
+                <div class="page-title">Quiz – Sprawdź się!</div>
+                <div class="page-subtitle">Zdobywaj punkty i ucz się!</div>
+            </div>
+            <div class="slide-content">
+                <div class="quiz-box" id="quiz-box"></div>
+                <div class="quiz-score" id="quiz-score"></div>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <!-- Kontakt -->
-  <section id="kontakt" class="section">
-    <div class="card">
-      <h2>Kontakt</h2>
-      <p>Email: <a href="mailto:kontakt@tomkrawczyk.pl" style="color:var(--accent);">kontakt@tomkrawczyk.pl</a></p>
-      <p>Telefon: <a href="tel:+48123456789" style="color:var(--accent);">+48 123 456 789</a></p>
-    </div>
-  </section>
+    <script>
+        let currentPageStack = ['main-menu'];
+        let ostatniaProdukcja = 0; // For calculator
 
-  <!-- Stopka -->
-  <footer>
-    &copy; 2025 Tom Krawczyk | Doradca Fotowoltaiki | Wszystkie prawa zastrzeżone
-  </footer>
+        // Navigation sequences for each category
+        const navigationSequences = {
+            'historia': ['historia-przeszlosc', 'historia-terazniejszosc', 'historia-przyszlosc'],
+            'ceny': ['ceny-historia', 'ceny-rachunki', 'ceny-sklad', 'ceny-oszczednosci', 'ceny-emisje'],
+            'instalacja': ['instalacja-dzialanie', 'instalacja-komponenty', 'instalacja-montaz', 'instalacja-zaawansowane'],
+            'firma': ['firma-info', 'firma-realizacje', 'firma-partnerstwa'],
+            'korzysci': ['korzysci-korzysci', 'korzysci-technologie', 'korzysci-dotacje', 'korzysci-faq', 'korzysci-quiz']
+        };
 
-  <!-- Scroll to top -->
-  <div class="scroll-indicator" onclick="scrollToTop()">Up</div>
+        function showSubmenu(submenuId) {
+            showPage(`submenu-${submenuId}`);
+        }
 
-  <script>
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
+        function showPage(pageId) {
+            document.querySelectorAll('.content-page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            currentPageStack.push(pageId);
+            document.querySelector('.back-button').classList.add('active');
+            
+            // Show next button only for subcategory pages
+            updateNextButton(pageId);
+        }
+
+        function updateNextButton(currentPageId) {
+            const nextButton = document.querySelector('.next-button');
+            
+            // Check if current page is a subcategory page and find its sequence
+            let currentSequence = null;
+            let currentIndex = -1;
+            
+            for (const [category, sequence] of Object.entries(navigationSequences)) {
+                const index = sequence.indexOf(currentPageId);
+                if (index !== -1) {
+                    currentSequence = sequence;
+                    currentIndex = index;
+                    break;
+                }
+            }
+            
+            // Show next button if there's a next page in the sequence
+            if (currentSequence && currentIndex !== -1 && currentIndex < currentSequence.length - 1) {
+                nextButton.classList.add('active');
+            } else {
+                nextButton.classList.remove('active');
+            }
+        }
+
+        function goNext() {
+            const currentPageId = currentPageStack[currentPageStack.length - 1];
+            
+            // Find current sequence and next page
+            for (const [category, sequence] of Object.entries(navigationSequences)) {
+                const currentIndex = sequence.indexOf(currentPageId);
+                if (currentIndex !== -1 && currentIndex < sequence.length - 1) {
+                    const nextPageId = sequence[currentIndex + 1];
+                    showPage(nextPageId);
+                    break;
+                }
+            }
+        }
+
+        function goBack() {
+            if (currentPageStack.length > 1) {
+                currentPageStack.pop();
+                const previousPage = currentPageStack[currentPageStack.length - 1];
+                document.querySelectorAll('.content-page').forEach(page => page.classList.remove('active'));
+                document.getElementById(previousPage).classList.add('active');
+                
+                if (currentPageStack.length === 1) {
+                    document.querySelector('.back-button').classList.remove('active');
+                }
+                
+                // Update next button for the previous page
+                updateNextButton(previousPage);
+            }
+        }
+
+        // Regular Modal
+        function showModal(title, htmlContent) {
+            document.getElementById('modal-body').innerHTML = `<h2>${title}</h2>` + htmlContent;
+            document.getElementById('myModal').style.display = 'flex';
+        }
+
+        // Component Modal with Images
+        function showComponentModal(title, imageUrl, description) {
+            document.getElementById('modal-body').innerHTML = `
+                <h2>${title}</h2>
+                <img src="${imageUrl}" alt="${title}" style="max-width: 100%; height: auto; border-radius: 15px; margin: 20px 0;">
+                <p>${description}</p>
+            `;
+            document.getElementById('myModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        // Gallery Modal Functions
+        function openGallery(imgElement, title, description) {
+            const modal = document.getElementById('galleryModal');
+            const modalBody = document.getElementById('gallery-modal-body');
+            
+            modalBody.innerHTML = `
+                <h2>${title}</h2>
+                <img src="${imgElement.src}" alt="${imgElement.alt}" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
+                <p>${description}</p>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeGalleryModal() {
+            document.getElementById('galleryModal').style.display = 'none';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const regularModal = document.getElementById('myModal');
+            const galleryModal = document.getElementById('galleryModal');
+            
+            if (event.target == regularModal) {
+                closeModal();
+            }
+            if (event.target == galleryModal) {
+                closeGalleryModal();
+            }
+        }
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+                closeGalleryModal();
+            }
         });
-      });
-    });
 
-    // Active nav
-    window.addEventListener('scroll', () => {
-      let current = '';
-      document.querySelectorAll('section').forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        if (scrollY >= sectionTop) {
-          current = section.getAttribute('id');
-        }
-      });
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-          link.classList.add('active');
-        }
-      });
-    });
+        // Calculator Functions
+        function oblicz() {
+            let zuzycie = parseFloat(document.getElementById('zuzycie').value);
+            let orientacja = parseFloat(document.getElementById('orientacja').value);
+            let trybMagazynu = document.getElementById('trybMagazynu').value;
+            const powierzchniaPanelu = 2.34; // Stała powierzchnia panelu w m²
+            const limitJednofazowy = 3.68; // Limit dla instalacji jednofazowej w kWp
 
-    // Kalkulator
+            if (isNaN(zuzycie)) {
+                showNotification("Podaj roczne zużycie energii!");
+                return;
+            }
+
+            // Obliczenie wstępnej mocy instalacji (z marginesem 20%)
+            let mocWstępna = (zuzycie * 1.2) / 1000;
+
+            // Automatyczny wybór paneli: 450 Wp dla instalacji <= 3,68 kWp, 480 Wp powyżej
+            let panel = mocWstępna <= limitJednofazowy ? 450 : 480;
+            let typInstalacji = mocWstępna <= limitJednofazowy ? "jednofazowa" : "trójfazowa";
+
+            // Obliczenie liczby paneli (zaokrąglenie w górę)
+            let liczbaPaneli = Math.ceil((mocWstępna * 1000) / panel);
+            // Rzeczywista moc instalacji na podstawie liczby paneli
+            let mocInstalacji = (liczbaPaneli * panel) / 1000;
+            // Obliczenie rocznej produkcji energii
+            let produkcja = mocInstalacji * 1000 * orientacja;
+            // Obliczenie powierzchni
+            let powierzchnia = liczbaPaneli * powierzchniaPanelu;
+
+            // Dobór pojemności magazynu energii na podstawie mocy instalacji (w kWh)
+            let magazynPojemnosc;
+            if (mocInstalacji <= 5) magazynPojemnosc = 5;
+            else if (mocInstalacji > 5 && mocInstalacji <= 9) magazynPojemnosc = 10;
+            else magazynPojemnosc = 15;
+
+            // Wynik główny
+            let wynik = `
+                <b>Typ instalacji:</b> ${typInstalacji}<br>
+                <b>Liczba paneli:</b> ${liczbaPaneli} x ${panel} Wp<br>
+                <b>Moc instalacji:</b> ${mocInstalacji.toFixed(2)} kWp<br>
+                <b>Szacowana roczna produkcja:</b> ${produkcja.toFixed(0)} kWh<br>
+                <b>Powierzchnia dachu potrzebna:</b> ${powierzchnia.toFixed(1)} m²<br>
+                <b>Magazyn energii:</b> ${magazynPojemnosc} kWh
+            `;
+
+            if (trybMagazynu === 'export') {
+                wynik += "<br><b>Tryb rozliczenia:</b> Eksport energii do sieci";
+            } else {
+                wynik += "<br><b>Tryb rozliczenia:</b> Bez eksportu (tylko zużycie lokalne)";
+            }
+
+            document.getElementById('wynik').innerHTML = wynik;
+            document.getElementById('wynik').style.display = 'block';
+
+            // Pokazanie kalkulatora zwrotu
+            document.getElementById('extra-calc').style.display = 'block';
+            ostatniaProdukcja = produkcja;
+        }
+
+        function obliczZwrot() {
+            let cenaPradu = parseFloat(document.getElementById('cenaPradu').value);
+            let cenaInstalacji = parseFloat(document.getElementById('cenaInstalacji').value);
+            let trybKalkulacji = document.getElementById('trybKalkulacji').value;
+
+            if (isNaN(cenaPradu) || isNaN(cenaInstalacji) || ostatniaProdukcja === 0) {
+                showNotification("Podaj wszystkie dane do kalkulacji zwrotu!");
+                return;
+            }
+
+            let lata = 0, oszczednosci = 0, wynikZwrotu = "";
+
+            if (trybKalkulacji === "standardowa") {
+                lata = cenaInstalacji / (cenaPradu * ostatniaProdukcja);
+                oszczednosci = cenaPradu * ostatniaProdukcja;
+                wynikZwrotu = `
+                    <b>Szacowany okres zwrotu:</b> ${lata.toFixed(1)} lat<br>
+                    <b>Roczne oszczędności:</b> ${oszczednosci.toFixed(2)} zł
+                `;
+            } else {
+                // Optymistyczna - 5% wzrost ceny prądu rocznie
+                let suma = 0, cena = cenaPradu;
+                while (suma < cenaInstalacji && lata < 50) {
+                    suma += cena * ostatniaProdukcja;
+                    cena *= 1.05;
+                    lata++;
+                }
+                oszczednosci = suma;
+                wynikZwrotu = `
+                    <b>Szacowany okres zwrotu:</b> ${lata} lat<br>
+                    <b>Łączne oszczędności w tym czasie:</b> ${oszczednosci.toFixed(2)} zł
+                `;
+            }
+            document.getElementById('extra-result').innerHTML = wynikZwrotu;
+        }
+
+       // Kalkulator
     function obliczAutokonsumpcje() {
       const produkcja = parseFloat(document.getElementById('produkcja').value);
       const eksport = parseFloat(document.getElementById('eksport').value);
@@ -455,7 +1662,99 @@
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  </script>
 
+        // Notification
+        function showNotification(msg) {
+            const notif = document.getElementById('notification');
+            notif.innerText = msg;
+            notif.style.display = 'block';
+            setTimeout(() => { notif.style.display = 'none'; }, 2200);
+        }
+
+        // Quiz
+        const quizQuestions = [
+            {
+                question: "Czym zajmuje się firma 4ECO?",
+                answers: ["Instalacje OZE", "Transport", "Budowa mostów", "Telekomunikacja"],
+                correct: 0
+            },
+            {
+                question: "Jak zmieniła się cena 1 kWh prądu od 2020 do 2025?",
+                answers: ["Spadła o 50%", "Wzrosła o 160%", "Pozostała bez zmian", "Wzrosła o 10%"],
+                correct: 1
+            },
+            {
+                question: "Do czego służy magazyn energii?",
+                answers: [
+                    "Do przechowywania nadwyżek prądu",
+                    "Do przechowywania wody",
+                    "Do produkcji gazu",
+                    "Do transportu energii"
+                ],
+                correct: 0
+            },
+            {
+                question: "Jaką dotację możesz uzyskać w programie Mój Prąd?",
+                answers: [
+                    "6 000 zł",
+                    "60 000 zł",
+                    "Brak dotacji",
+                    "2 000 zł"
+                ],
+                correct: 0
+            },
+            {
+                question: "Jaka jest typowa amortyzacja instalacji PV?",
+                answers: [
+                    "20 lat",
+                    "6-8 lat",
+                    "Rok",
+                    "Nie da się odzyskać kosztów"
+                ],
+                correct: 1
+            }
+        ];
+        let quizIndex = 0;
+        let quizScore = 0;
+
+        function renderQuiz() {
+            const box = document.getElementById('quiz-box');
+            if (box) {
+                if (quizIndex < quizQuestions.length) {
+                    const q = quizQuestions[quizIndex];
+                    box.innerHTML = `<div class="quiz-question">${q.question}</div><div class="quiz-answers"></div>`;
+                    const answersDiv = box.querySelector('.quiz-answers');
+                    q.answers.forEach((ans, idx) => {
+                        const btn = document.createElement('button');
+                        btn.innerText = ans;
+                        btn.onclick = () => quizAnswer(idx);
+                        answersDiv.appendChild(btn);
+                    });
+                    const scoreEl = document.getElementById('quiz-score');
+                    if (scoreEl) scoreEl.innerText = `Twój wynik: ${quizScore}/${quizQuestions.length}`;
+                } else {
+                    box.innerHTML = `<div class='quiz-result'>Koniec quizu!<br>Twój wynik: <span style='color:#22c55e;'>${quizScore} / ${quizQuestions.length}</span></div>`;
+                    const scoreEl = document.getElementById('quiz-score');
+                    if (scoreEl) scoreEl.innerText = "";
+                }
+            }
+        }
+        function quizAnswer(idx) {
+            if (quizQuestions[quizIndex].correct === idx) {
+                quizScore++;
+                showNotification("Dobra odpowiedź!");
+            } else {
+                showNotification("Ups! To nieprawidłowa odpowiedź.");
+            }
+            quizIndex++;
+            setTimeout(renderQuiz, 800);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.back-button').classList.remove('active');
+            document.querySelector('.next-button').classList.remove('active');
+            renderQuiz();
+        });
+    </script>
 </body>
 </html>
