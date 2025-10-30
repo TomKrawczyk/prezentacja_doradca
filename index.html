@@ -399,6 +399,34 @@
         .next-button.active {
             display: block;
         }
+         /* Home Button */
+        .home-button {
+            position: fixed;
+            top: 90px;
+            right: 30px;
+            padding: 15px 30px;
+            background: rgba(74, 222, 128, 0.2);
+            border: 2px solid #4ade80;
+            border-radius: 50px;
+            color: #4ade80;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            display: none;
+            font-size: 1.1em;
+        }
+
+        .home-button:hover {
+            background: #4ade80;
+            color: #0a0e27;
+            transform: translateX(5px);
+        }
+
+        .home-button.active {
+            display: block;
+        }
 
         /* Calculator Styles */
         .calculator-container {
@@ -535,7 +563,7 @@
                 padding: 15px;
                 margin: 10px;
             }
-            .back-button, .next-button {
+            .back-button, .next-button, .home-button {
                 top: 20px;
                 padding: 10px 20px;
                 font-size: 1em;
@@ -544,6 +572,10 @@
                 left: 20px;
             }
             .next-button {
+                right: 20px;
+            }
+            .home-button {
+                top: 70px;
                 right: 20px;
             }
         }
@@ -714,6 +746,9 @@
     
     <!-- Next Button -->
     <a href="#" class="next-button" onclick="goNext()">Dalej →</a>
+    
+    <!-- Home Button --> 
+    <a href="#" class="home-button" onclick="goHome()">Strona główna</a>
     
     <div class="notification" id="notification"></div>
     
@@ -1273,6 +1308,7 @@
             document.getElementById(pageId).classList.add('active');
             currentPageStack.push(pageId);
             document.querySelector('.back-button').classList.add('active');
+            document.querySelector('.home-button').classList.add('active');
             
             // Show next button only for subcategory pages
             updateNextButton(pageId);
@@ -1325,11 +1361,24 @@
                 
                 if (currentPageStack.length === 1) {
                     document.querySelector('.back-button').classList.remove('active');
+                    document.querySelector('.home-button').classList.remove('active');
                 }
                 
                 // Update next button for the previous page
                 updateNextButton(previousPage);
             }
+        }
+
+        function goHome() {
+            // Reset to main menu
+            currentPageStack = ['main-menu'];
+            document.querySelectorAll('.content-page').forEach(page => page.classList.remove('active'));
+            document.getElementById('main-menu').classList.add('active');
+            
+            // Hide all navigation buttons on main menu
+            document.querySelector('.back-button').classList.remove('active');
+            document.querySelector('.next-button').classList.remove('active');
+            document.querySelector('.home-button').classList.remove('active');
         }
 
         // Regular Modal
@@ -1612,6 +1661,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.back-button').classList.remove('active');
             document.querySelector('.next-button').classList.remove('active');
+            document.querySelector('.home-button').classList.remove('active');
         });
     </script>
 </body>
